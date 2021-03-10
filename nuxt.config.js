@@ -8,23 +8,27 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ]
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
-    '~assets/css/main.css',
+    '~assets/css/main.less',
+    '~assets/css/Media.less',
     '@/assets/iconfont/iconfont.css',
     'element-ui/lib/theme-chalk/index.css',
-    'wowjs/css/libs/animate.css'
+    'wowjs/css/libs/animate.css',
+    'animate.css/animate.css',
   ],
+  script:[
 
+  ],
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     {src:'@/plugins/element-ui'},
     {src:'@/plugins/axios'},
-    {src:'@/assets/iconfont/iconfont.js',ssr:false}
+    {src:'@/assets/iconfont/iconfont.js',ssr:false},
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -43,8 +47,12 @@ export default {
     }
  ],
  modules: [
-  '@nuxtjs/axios','@nuxtjs/proxy'
+  '@nuxtjs/axios','@nuxtjs/proxy',
+  '@nuxtjs/style-resources'
   ],
+  styleResources: {
+    less: '@/assets/css/global.less'
+  },
   axios: {
       proxy: true, // 表示开启代理
       prefix: '/api', // 表示给请求url加个前缀 /api

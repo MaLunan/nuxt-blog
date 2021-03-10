@@ -1,0 +1,190 @@
+/* 页面切换动效 */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+/* 路由切换动效 */
+.test-enter-active,
+.test-leave-active {
+  transition: opacity 0.5s;
+}
+.test-enter,
+.test-leave-active {
+  opacity: 0;
+}
+/* 全局样式 */
+
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,dt,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+body{font-size:12px;background:#fff;
+  // 鼠标指针
+  cursor: url('../pointer/arrow.png'),auto;
+  height: 100vh;
+  font-family:Helvetica, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Arial, sans-serif;}
+a{text-decoration:none;color: black;}
+a:hover{
+  color: @hovercolor;
+}
+em{font-style:normal}
+li{list-style:none}
+img{border:0;vertical-align:middle; width: 100%;height: 100%; }
+table{border-collapse:collapse;border-spacing:0;padding: 0 0; text-align: center;}
+p{word-wrap:break-word}
+.ind{text-indent:2em}
+.ind10{text-indent:10px;}
+.noborder{border:0;}
+.left{float:left;}
+.right{float:right;}
+.clearfix::before,
+.clearfix::after{
+    content: '';
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+    clear: both;
+
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(88,165,195);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(51,51,51,.1);
+}
+/* 全局css类 */
+/* 水平垂直居中 */
+.center{
+  /* position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 50%;
+  bottom: 50%; */
+}
+/* 内容top值 */
+.content{
+  margin-top: 24px;
+}
+/* 序列⚪*/
+.sequence{
+    border-radius: 50%;
+    border: 2px solid black;
+    width: 18px;
+    height: 18px;
+    color: black;
+    display: block;
+    text-align: center;
+    line-height: 18px;
+    float: left;
+}
+/* 面包屑分割 */
+.separator{
+    color: #3d3535;
+    padding: 0 8px;
+    font-size: 16px;
+}
+/* // 标签样式 */
+.titletag{
+	height: 30px;
+	width: 72px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	line-height: 42px;
+	background-color: chartreuse;
+	transform: rotate(-40deg)  translateX(-15px) translatey(-15px);
+	-o-transform: rotate(-40deg)  translateX(-15px) translatey(-15px);
+	-webkit-transform: rotate(-40deg)  translateX(-15px) translatey(-15px);
+  -moz-transform: rotate(-40deg)  translateX(-15px)  translatey(-15px);
+}
+/* N行显示  超出部分隐藏 */
+
+.textone {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 25px;    
+  max-height: 25px;
+  -webkit-line-clamp: 1; /* 几行显示就是几*/
+  -webkit-box-orient: vertical;
+}
+.textTow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 23px;
+  max-height: 46px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.textthree {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+/*  */
+.w1200{
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.top24{
+  margin-top: 24px;
+}
+.leftW{
+  width: 70%;
+  float: left;
+}
+.rightW{
+  width: 28.8%;
+  float: right;
+}
+.overflow {overflow:hidden; }  
+/* icon */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+/* bg */
+body, html {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  margin: 0;
+  padding: 0;
+}
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: -100;
+}
+/* element */
+body .el-scrollbar__wrap {
+  overflow-x: hidden;
+}
+/* 
+data-wow-duration:改变动画时间
+data-wow-delay:延迟在动画开始之前
+data-wow-offset:距离开始动画(浏览器底部)
+data-wow-iteration:动画重复的次数
+ */

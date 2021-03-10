@@ -6,6 +6,90 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "2567980",
+      "name": "支付宝",
+      "font_class": "zhifubao",
+      "unicode": "e7ec",
+      "unicode_decimal": 59372
+    },
+    {
+      "icon_id": "3931670",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e7ed",
+      "unicode_decimal": 59373
+    },
+    {
+      "icon_id": "7372587",
+      "name": "微博",
+      "font_class": "weibo-copy",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "8087888",
+      "name": "github",
+      "font_class": "Octicons-mark-github",
+      "unicode": "e7ee",
+      "unicode_decimal": 59374
+    },
+    {
+      "icon_id": "9385837",
+      "name": "简书",
+      "font_class": "jianshu",
+      "unicode": "e7ef",
+      "unicode_decimal": 59375
+    },
+    {
+      "icon_id": "10011727",
+      "name": "微博",
+      "font_class": "weibo",
+      "unicode": "e7f0",
+      "unicode_decimal": 59376
+    },
+    {
+      "icon_id": "13851157",
+      "name": "微信付款",
+      "font_class": "niuqi-",
+      "unicode": "e7f1",
+      "unicode_decimal": 59377
+    },
+    {
+      "icon_id": "15189993",
+      "name": "头条",
+      "font_class": "toutiao",
+      "unicode": "e7f2",
+      "unicode_decimal": 59378
+    },
+    {
+      "icon_id": "15402119",
+      "name": "支付宝",
+      "font_class": "umidd17",
+      "unicode": "101db",
+      "unicode_decimal": 66011
+    },
+    {
+      "icon_id": "15857028",
+      "name": "bilibili",
+      "font_class": "BILIBILI_LOGO",
+      "unicode": "e7f3",
+      "unicode_decimal": 59379
+    },
+    {
+      "icon_id": "16672303",
+      "name": "快手",
+      "font_class": "kuaishou",
+      "unicode": "e7f4",
+      "unicode_decimal": 59380
+    },
+    {
+      "icon_id": "17271773",
+      "name": "快手",
+      "font_class": "kuaishou1",
+      "unicode": "e7f5",
+      "unicode_decimal": 59381
+    },
+    {
       "icon_id": "19099123",
       "name": "Cluster",
       "font_class": "Cluster",

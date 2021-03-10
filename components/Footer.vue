@@ -2,8 +2,8 @@
   <div>
   	<el-row type="flex" justify="center">
   		<el-col :span="24" class="footer">
-			<div>COPYRIGHT 2018 BRIAN LEE. ALL RIGHTS RESERVED.</div>
-			<div>皖ICP备18003757号</div>
+			<div>Copyright © 2020 Malunan</div>
+			<nuxt-link to='https://beian.miit.gov.cn/#/Integrated/index'>京ICP备19053813号-1</nuxt-link>
   		</el-col>
   	</el-row>
   </div>
@@ -20,5 +20,6 @@
 		color:#666;
 		text-align:center;
 		line-height:60px;
+		font-size: 18px;
 	}
 </style>
