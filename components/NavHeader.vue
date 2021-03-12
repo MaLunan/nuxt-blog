@@ -36,6 +36,12 @@
 <script>
 export default {
   name: "Header",
+  props:{
+    active:{
+      type:String,
+      default:'/'
+    }
+  },
   data() {
     return {
       show: false,
@@ -48,13 +54,13 @@ export default {
      configNav: [
         {
           name: "首页",
-          path:'/gwindex',
+          path:'/',
         },
         {
           name: "知识笔记",
           path:'',
            subItems:[
-                        { link:'/home',text: '基础知识'},
+                        { link:'/article',text: '基础知识'},
                         { link:'/',text: '进阶知识' },
                         { link:'',text: 'BUG' },
                         { link:'',text: '面试经' }

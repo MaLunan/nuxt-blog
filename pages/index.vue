@@ -6,11 +6,11 @@
 		<div class="leftW">
 			<!-- 首页轮播图 -->
 			<el-carousel trigger="click" :interval='10000' class="swiper">
-				<el-carousel-item v-for="(item,index) in img" :key="index">
-					<img :src="item" alt="">
+				<el-carousel-item v-for="(item,index) in wpSwiper" :key="index" v-if="item.state">
+					<img :src="item.img" :alt="item.title">
 					<!-- swiper title -->
-					<span class="swiper-title textone">
-						今天是个好日子{{item}}
+					<span @click="open(item.href)" class="swiper-title textone">
+						{{item.title}}
 					</span>
 				</el-carousel-item>
 			</el-carousel>
@@ -20,13 +20,13 @@
 					热门
 				</div>
 				<ul class="todo-list">
-					<li v-for="item in 6" :key="item" class="clearfix">
-						<span class="sequence">{{item}}</span>
+					<li v-for="(item,index) in WpPosts" :key="index" class="clearfix" v-if="index<6">
+						<span class="sequence">{{index+1}}</span>
 						<span class="date">
-							12-45
+							{{item.post_date}}
 						</span>
-						<nuxt-link to="/" class="textone">
-							最新整理了一下zblog程序的思路，把过去遇到的zblogphp问题总结一下，zblog程序的思路，把过去遇到的zblogphp问题总结一下都是一些常见
+						<nuxt-link :to="`/article/${item.ID}`" class="textone">
+							{{item.post_title}}
 						</nuxt-link>
 					</li>
 				</ul>
@@ -41,42 +41,39 @@
 				</ul>
 			</div>	
 			<!-- 文章列表 -->
-			<div class="cardcss article-box clearfix wow fadeIn" data-wow-duration='2s' v-for="n in 8" :key="n">
+			<div class="cardcss article-box clearfix wow fadeIn" data-wow-duration='2s' v-for="(item,index) in WpPostsData" :key="index">
 				<!-- 右侧 -->
-				<div :class="['article-right',n%2?'article-right-isno':'']">
-					<img :src="img.img1" alt="" title="">
+				<div :class="['article-right',index%2?'article-right-isno':'']">
+					<img :src="item.post_img" :alt="item.post_title" :title="item.post_title">
 				</div>
 				<!-- 左侧 -->
-				<div :class="['article-left',n%2?'article-left-isno':'']">
+				<div :class="['article-left',index%2?'article-left-isno':'']">
 					<!-- 标题 -->
 					<h1 class="textone">
-						<nuxt-link to=''>Hello, Z-Blog</nuxt-link>
+						<nuxt-link :to="`/article/${item.ID}`">{{item.post_title}}</nuxt-link>
 					</h1>
 					<!-- 内容简写 -->
 					<p class="textthree">
-						Z-Blog是由Z-Blog社区提供的博客程序，一直致
-						力于给国内用户提供优秀的博客写作体验。从2005年起发布第一版，至今已有15年的
-						历史
-						，是目前国内为数不多的持续提供更新的开源CMS系统之一。 目标是使用...
+						{{textData(item.post_content)}}
 					</p>
 					<!-- 标签栏 -->
 					<div class="particulars">
-						<span class="iconfont icon-User">malunan</span>
+						<span class="iconfont icon-User">{{item.post_author}}</span>
 						<span class="separator">/</span>
 						<nuxt-link to='' class="iconfont icon-Tags">
-							互联网
+							{{types(item.type)}}
 						</nuxt-link>
 						<span class="separator">/</span>
 						<span to='' class="iconfont icon-clock-circle">
-							2020-1-21
+							{{item.post_date}}
 						</span>
 						<span class="separator">/</span>
 						<nuxt-link to='' class="iconfont icon-eye">
-							9
+							{{item.browse}}
 						</nuxt-link>
 						<span class="separator">/</span>
 						<nuxt-link to='' class="iconfont icon-Edit">
-							9
+							{{item.commentCount}}
 						</nuxt-link>
 					</div>
 				</div>
@@ -94,48 +91,88 @@
 			<!-- 个人资料卡 -->
 			<div class="dataCard">
 				<div class="widet_user">	
-					<img class="imgbox rotate"  :src="img.img1" alt="" @mouseenter="rotateImg" @mouseleave="clearInterval">	
-					<span class="user">malunan <img class="vbox" src="../assets/img/V.png" alt=""> </span>
-					<p class="textTow synopsis">李洋博客提供个人/企业网站建设_业网站建设业网站建设业网站建设业网站建设制作zblog博客主题模板以及SEO排名优化的</p>
+					<img class="imgbox rotate"  :src="wpUser.avatar" alt="头像">	
+					<span class="user">{{wpUser.name}} <img class="vbox" src="../assets/img/V.png" alt="head"> </span>
+					<p class="textTow synopsis">{{wpUser.introduction}}</p>
 					<div class="site_state">
 						<nuxt-link to="" class="site_state_item item_border">
-							<p class="number">159</p>
+							<p class="number">{{wpUser.post}}</p>
 							<p>文章</p>
 						</nuxt-link>
 						<nuxt-link to="" class="site_state_item item_border">
-							<p class="number">159</p>
+							<p class="number">{{wpUser.comments}}</p>
 							<p>评论</p>
 						</nuxt-link>
 						<nuxt-link to="" class="site_state_item">
-							<p class="number">159213</p>
+							<p class="number">{{wpUser.pv}}</p>
 							<p>浏览</p>
 						</nuxt-link>
 					</div>
 					<div class="aBox">
-						<nuxt-link to='' class="iconfont icon-Octicons-mark-github tabAherf">
+						<span @click="open()" class="iconfont icon-Octicons-mark-github tabAherf">
 							Github
-						</nuxt-link>
-						<nuxt-link to='' class="iconfont icon-weibo tabAherf">
+						</span >
+						<span @click="open()" class="iconfont icon-weibo tabAherf">
 							微博
-						</nuxt-link>
-						<nuxt-link to='' class="iconfont icon-toutiao tabAherf">
+						</span >
+						<span @click="open()" class="iconfont icon-toutiao tabAherf">
 							头条
-						</nuxt-link>
-						<nuxt-link to='' class="iconfont icon-BILIBILI_LOGO tabAherf">
+						</span >
+						<span @click="open()" class="iconfont icon-BILIBILI_LOGO tabAherf">
 							B站
-						</nuxt-link>
-						<nuxt-link to='' class="iconfont icon-kuaishou1 tabAherf">
+						</span >
+						<span @click="open()" class="iconfont icon-kuaishou1 tabAherf">
 							快手
-						</nuxt-link>
-						<nuxt-link to='' class="iconfont icon-external_tiktok tabAherf">
+						</span >
+						<span @click="open()" class="iconfont icon-external_tiktok tabAherf">
 							抖音
-						</nuxt-link>
+						</span >
 					</div>
 				</div>	
 			</div>
 			<!-- 标签云 -->
 			<div class="personalData">
 				<TagsCloud :useArray="useArray" :boxWidth="300" :speed="400" :randomColor="true"></TagsCloud>
+			</div>
+			<!-- 最新留言 -->
+			<div class="divPrevious">
+				<h3 class="widget_title">最新留言</h3>
+				<ul class="comment_ul">
+					<li class="comment_li textone">
+						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					</li>
+					<li class="comment_li textone">
+						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					</li>
+					<li class="comment_li textone">
+						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					</li>
+					<li class="comment_li textone">
+						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					</li>
+					<li class="comment_li textone">
+						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					</li>
+					<li class="comment_li textone">
+						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					</li>
+					<li class="comment_li textone">
+						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					</li>
+					<li class="comment_li textone">
+						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					</li>
+				</ul>
+			</div>
+			<!-- 友情链接 -->
+			<div class="divPrevious">
+				<h3 class="widget_title">友情链接</h3>
+				<h3>虚伪以待</h3>
+				<!-- <ul>
+					<li>
+						
+					</li>
+				</ul> -->
 			</div>
 		</div>
 	</div>
@@ -156,12 +193,6 @@ export default {
 				img2:require("../assets/img/img2.jpg"),
 				img3:require("../assets/img/img3.jpg"),
 				img4:require("../assets/img/img4.jpg")
-			},
-			// 分页
-			page:{
-                total:20,
-                current:1,
-                size:10,
 			},
 			// 标签云
 			useArray: [  
@@ -187,15 +218,79 @@ export default {
 			InterVal:null,
 		}
 	},
-	async asyncData({app}) {
+	async asyncData({app,error}) {
+		//公共方法
+		const awaitWrap = (promise) => {
+		return promise
+		.then(data => [null, data])
+		.catch(err => [err, null])
+		}
 		// 服务器端渲染数据
-
+		let WpPosts =await awaitWrap(app.$axios.get('/blog/wpPosts/getWpPosts'))
+		let WpPostsData =await awaitWrap(app.$axios({
+				method:'get',
+				url:'/blog/wpPosts/getWpPosts',
+				params:{
+					sort:'post_date'
+				}
+			}))
+		let wpSwiper= await awaitWrap(app.$axios.get('/blog/wpPosts/getWpSwiper'))
+		let wpTaxonomy=await awaitWrap(app.$axios.get('/blog/wpPosts/getTaxonomy'))
+		let wpUser=await awaitWrap(app.$axios.get('/blog/wpPosts/getUser'))
+		if(WpPosts[0]||wpSwiper[0]||wpTaxonomy[0]||wpUser[0]){
+			error({ statusCode: 500, message: 'Post not found' })
+		}else{
+			return {
+				WpPosts:WpPosts[1].data.data.datas,
+				wpSwiper:wpSwiper[1].data.data.datas,
+				wpTaxonomy:wpTaxonomy[1].data.data.datas,
+				wpUser:wpUser[1].data.data.datas,
+				WpPostsData:WpPostsData[1].data.data.datas,
+				page:{
+					total:WpPostsData[1].data.data.Count,
+					current:WpPostsData[1].data.data.page,
+					size:WpPostsData[1].data.data.size,
+				}
+			}
+		}
+		
 	},
 	methods: {
+		//外部链接跳转
+		open(url){
+			console.log(url)
+			window.open(url)
+		},
+		//请求数据
+		async getWpPosts(){
+			let WpPostsData =await this.$axios({
+				method:'get',
+				url:'/blog/wpPosts/getWpPosts',
+				params:{
+					page:this.page.current,
+					size:this.page.size,
+					sort:'post_date'
+				}
+			})
+			return {WpPostsData:WpPostsData.data.data.datas,
+					page:{
+							total:WpPostsData.data.data.Count,
+							current:WpPostsData.data.data.page,
+							size:WpPostsData.data.data.size,
+						}
+				}
+		},
+		// 富文本数据处理
+		textData(content){
+            var msg = content.replace(/<(p|div)[^>]*>(<br\/?>|&nbsp;)<\/\1>/gi, '\n').replace(/<br\/?>/gi, '\n').replace(/<[^>/]+>/g, '').replace(/(\n)?<\/([^>]+)>/g, '').replace(/\u00a0/g, ' ').replace(/&nbsp;/g, ' ').replace(/<\/?(img)[^>]*>/gi, '').replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&#39;/g,"\'").replace(/&quot;/g,"\"").replace(/<\/?.+?>/g,"")
+            var x =msg.slice(0,280)
+			return x
+        },
 		//分页
 		pagination(val){
         this.page.current=val.page
         this.page.size=val.limit
+		this.getWpPosts()
 		},
 		//更新条数时调用
         updatelimit(val){
@@ -203,19 +298,17 @@ export default {
         //更新页数时调用
         updatepage(val){
         },
-		// 悬停鼠标 旋转 图片
-		rotateImg(){
-			var that=this;
-			// that.InterVal = setInterval(function () {
-				
-			// 		// this.rotateVal = this.rotateVal-0
-			// 		that.rotateVal+=1
-			// 		console.log(that.rotateVal)
-			// 	}, 100)
-			// console.log(that.InterVal)
-		},
-		clearInterval(){
-			// clearInterval(this.InterVal)
+		//分类转换
+		types(t){
+			let typeList=[]
+			this.wpTaxonomy.forEach(item=>{
+				t.forEach(ite=>{
+					if(item.ID===ite){
+					typeList.push(item.taxonomy_nanme)
+					}
+				})
+			})
+			return typeList.join('/')
 		}
 	},
 	head() {
@@ -229,7 +322,6 @@ export default {
 		}
   },
   mounted() {
-	  console.log('dddd')
      if (process.browser) {  // 在页面mounted生命周期里面 根据环境实例化WOW
          new WOW({
              live: false, 
@@ -263,6 +355,10 @@ export default {
 	padding-right: 150px;
 	line-height: 40px;
 	max-height: none;
+	cursor: pointer;
+}
+.swiper-title:hover{
+	color: @hovercolor;
 }
 // swiper切换按钮变圆
 .el-carousel__button{
@@ -329,6 +425,9 @@ export default {
 			bottom: 0;
 			left: 0;
 			height: 24px;
+			.iconfont{
+				font-size: 12px!important;
+			}
 		}
 	}
 	>.article-left-isno{
@@ -417,6 +516,53 @@ export default {
 	margin-top: 12px;
 	border-radius: 15px;
 }
+//右侧卡片通用样式
+.divPrevious{
+	background-color: @background;
+	margin-top: 12px;
+	border-radius: 15px;
+	padding: 10px 20px;
+	.widget_title{
+		font-size: 16px;
+		color: #333;
+		text-transform: uppercase;
+		padding-bottom: 15px;
+		margin-top: 2px;
+		position: relative;
+		border-bottom: 1px solid #ddd;
+		&::after{
+			content: "";
+			background-color: #666666;
+			left: 0;
+			width: 66px;
+			height: 2px;
+			bottom: -1px;
+			position: absolute;
+			-webkit-transition: 0.5s;
+			-moz-transition: 0.5s;
+			-ms-transition: 0.5s;
+			-o-transition: 0.5s;
+			transition: 0.5s;
+		}
+		&:hover::after{
+			width: 88px !important;
+		}
+	}
+	.comment_ul{
+		overflow: hidden;
+		.comment_li{
+			padding: 8px 0;
+			border-bottom: 1px dashed #dadada;
+			.comment_name{
+				font-size: 16px;
+				font-weight: bold;
+			}
+		}
+		.comment_li:nth-last-child(1){
+			border-bottom:none;
+		}
+	}
+}
 //资料卡样式
 .dataCard{
 	height: 480px;
@@ -456,6 +602,7 @@ export default {
 		.synopsis{
 			font-size: 14px;
 			padding: 8px 15px 0;
+			min-height: 46px;
 		}
 		.site_state{
 			.site_state_item{
@@ -478,6 +625,10 @@ export default {
 				display: inline-block;
 				text-align: center;
 				margin: 10px 0;
+				cursor: pointer;
+			}
+			.tabAherf:hover{
+				color:@hovercolor;
 			}
 			.iconfont{
 				font-size: 18px;

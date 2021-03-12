@@ -60,7 +60,7 @@ export default {
   },
   proxy: {
     '/api': {
-      target: 'https://zmln1021.cn:3000', // 目标接口域名
+      target: 'http://localhost:3000', // 目标接口域名
       changeOrigin: true, // 表示是否跨域
       pathRewrite: {
         '^/api': '/', // 把 /api 替换成 /
@@ -77,4 +77,14 @@ export default {
     },
     vendor: ['axios'] //为防止重复打包
   }
+  
 }
+//  判断是路由跳转还是 axios 请求
+// if (process.server) {
+//   config.baseURL = `${
+//     process.env.ENV !== "production"
+//       ? process.env.DEV_API
+//       : process.env.PROD_API
+//   }`;
+//   console.log(config.baseURL);
+// }

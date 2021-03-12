@@ -14,7 +14,7 @@
 		display:flex;
 		justify-content:center;
 		align-items:center;
-		margin-top:8rem;
+		margin-top:20px;
 		height:60px;
 		background:#23282D;
 		color:#666;
