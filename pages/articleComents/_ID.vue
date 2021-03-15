@@ -3,9 +3,59 @@
 	<NavHeader :active="active"></NavHeader>
 	<!-- 左侧文章内容 -->
 	<div class="w1200 top24">
+        <div class="navigation">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/' }"><i class="iconfont icon-home"></i>首页</el-breadcrumb-item>
+            <el-breadcrumb-item>{{commentName}}</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
 		<div class="leftW">
-
-		
+			<!-- 文章列表 -->
+			<div class="cardcss article-box clearfix wow fadeIn" data-wow-duration='2s' v-for="(item,index) in WpPostsData" :key="index">
+				<!-- 右侧 -->
+				<div :class="['article-right',index%2?'article-right-isno':'']">
+					<img :src="item.post_img" :alt="item.post_title" :title="item.post_title">
+				</div>
+				<!-- 左侧 -->
+				<div :class="['article-left',index%2?'article-left-isno':'']">
+					<!-- 标题 -->
+					<h1 class="textone">
+						<nuxt-link :to="`/article/${item.ID}`">{{item.post_title}}</nuxt-link>
+					</h1>
+					<!-- 内容简写 -->
+					<p class="textthree">
+						{{textData(item.post_content)}}
+					</p>
+					<!-- 标签栏 -->
+					<div class="particulars">
+						<span class="iconfont icon-User">{{item.post_author}}</span>
+						<span class="separator">/</span>
+						<nuxt-link to='' class="iconfont icon-Tags">
+							{{types(item.type)}}
+						</nuxt-link>
+						<span class="separator">/</span>
+						<span to='' class="iconfont icon-clock-circle">
+							{{item.post_date}}
+						</span>
+						<span class="separator">/</span>
+						<nuxt-link to='' class="iconfont icon-eye">
+							{{item.browse}}
+						</nuxt-link>
+						<span class="separator">/</span>
+						<nuxt-link to='' class="iconfont icon-Edit">
+							{{item.commentCount}}
+						</nuxt-link>
+					</div>
+				</div>
+			</div>	
+			<pagination 
+				:total='page.total' 
+				:page='page.current' 
+				:limit='page.size'
+				@update:limit='updatelimit' 
+				@update:page='updatepage'
+				@pagination='pagination'>
+			</pagination>
 		</div>
 		<div class="rightW rightbox">
 			<!-- 个人资料卡 -->
@@ -52,7 +102,7 @@
 			</div>
 			<!-- 标签云 -->
 			<div class="personalData">
-				<TagsCloud :useArray="wpTaxonomy" :boxWidth="300" :speed="400" :randomColor="true"></TagsCloud>
+				<TagsCloud :useArray="wpTaxonomy" :boxWidth="300" :speed="400" :randomColor="true" :key="wpTaxonomy.ID"></TagsCloud>
 			</div>
 			<!-- 最新留言 -->
 			<div class="divPrevious">
@@ -92,7 +142,9 @@ export default {
 			InterVal:null,
 		}
 	},
-	async asyncData({app,error}) {
+    watchQuery: true,
+	async asyncData({app,error,query}) {
+        console.log(app)
 		//公共方法
 		const awaitWrap = (promise) => {
 		return promise
@@ -101,23 +153,23 @@ export default {
 		}
 		// 服务器端渲染数据
 		let WpPosts =await awaitWrap(app.$axios.get('/blog/wpPosts/getWpPosts'))
+        console.log(query.type,query.name)
 		let WpPostsData =await awaitWrap(app.$axios({
 				method:'get',
 				url:'/blog/wpPosts/getWpPosts',
 				params:{
-					sort:'post_date'
+                    type:query.type,
+					sort:'post_date',
 				}
 			}))
-		let wpSwiper= await awaitWrap(app.$axios.get('/blog/wpPosts/getWpSwiper'))
 		let wpTaxonomy=await awaitWrap(app.$axios.get('/blog/wpPosts/getTaxonomy'))
 		let wpUser=await awaitWrap(app.$axios.get('/blog/wpPosts/getUser'))
 		let wpComments=await awaitWrap(app.$axios.post('/blog/wpPosts/getAllComments'))
-		if(WpPosts[0]||wpSwiper[0]||wpTaxonomy[0]||wpUser[0]||wpComments[0]){
-			error({ statusCode: 500, message: WpPosts[0]||wpSwiper[0]||wpTaxonomy[0]||wpUser[0]||wpComments[0] })
+		if(WpPosts[0]||wpTaxonomy[0]||wpUser[0]||wpComments[0]){
+			error({ statusCode: 500, message: WpPosts[0]||wpTaxonomy[0]||wpUser[0]||wpComments[0] })
 		}else{
 			return {
 				WpPosts:WpPosts[1].data.data.datas,
-				wpSwiper:wpSwiper[1].data.data.datas,
 				wpTaxonomy:wpTaxonomy[1].data.data.datas,
 				wpUser:wpUser[1].data.data.datas,
 				WpPostsData:WpPostsData[1].data.data.datas,
@@ -126,7 +178,8 @@ export default {
 					total:WpPostsData[1].data.data.Count,
 					current:WpPostsData[1].data.data.page,
 					size:WpPostsData[1].data.data.size,
-				}
+				},
+                commentName:query.name,
 			}
 		}
 		
@@ -208,7 +261,8 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+
 // 通用卡片样式
 .cardcss{
 	height: 214px;
@@ -218,7 +272,65 @@ export default {
 	position: relative;
 	background-color: @background;
 }
-
+.top-list{
+	height: 250px;
+}
+// 文章列表
+.article-box{
+	height: 214px;
+	padding: 18px 24px;
+	>.article-left{
+		height:100%;
+		margin-right:224px;
+		// background:white;
+		// border-radius: 15px;
+		box-sizing: border-box;
+		position: relative;
+		>p{
+			font-size: 18px;
+			margin: 24px 0 29px;
+		}
+		h1>a{
+			color:@Stextcolor;
+		}
+		h1>a:hover{
+			color: @hovercolor;
+			cursor: pointer;
+			transition: all 1s initial;
+		}
+		.particulars{
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			height: 24px;
+			.iconfont{
+				font-size: 12px!important;
+			}
+		}
+	}
+	>.article-left-isno{
+		margin-left: 224px;
+		margin-right: 0;
+	}
+	>.article-right{
+		float:right;
+		width:200px;
+		height:100%;
+		background:#afa;
+		overflow: hidden;
+		border-radius: 15px;
+	}
+	>.article-right-isno{
+		float: left;
+	}
+	&:hover img{
+		width: 120%;
+		height: 120%;
+		margin-left: -10%;
+		margin-top: -10%;
+		transition: all 1s ease;
+	}
+}
 // 右侧样式
 .rightbox{
 	position: relative;
@@ -227,8 +339,53 @@ export default {
 	min-height: 0px;
 	padding-left: 20px;
 }
-
-
+// 列表样式
+.todo-list{
+	padding:18px 24px;
+	overflow: hidden;
+	height: 250px;
+	>li{
+		margin-bottom: 12px;
+		overflow: hidden;
+		color: @Stextcolor;
+		>a{
+			color: black;
+			font-size: 18px;
+			margin-left: 30px;
+			margin-right: 60px;
+		}
+		>a:hover{
+			color: @hovercolor;
+		}
+	}
+	>li:nth-of-type(1) > span:first-of-type{
+		background:rgb(240, 17, 32) !important;
+	}
+	>li:nth-of-type(2) > span:first-of-type{
+		background:#ff7a21 !important;
+	}
+	>li:nth-of-type(3) > span:first-of-type{
+		background:#1681E7 !important;
+	}
+	>li:nth-of-type(4) > span:first-of-type{
+		background:#37b760 !important;
+	}
+	>li:nth-of-type(5) > span:first-of-type{
+		background:rgb(29, 235, 235) !important;
+	}
+	>li:nth-of-type(6) > span:first-of-type{
+		background:rgb(138, 255, 5) !important;
+	}
+}
+// 时间样式
+.date{
+	float: right;
+    color: #999;
+    position: relative;
+    top: 2px;
+	margin-left: 8px;
+	font-size: 16px;
+}
 // 标签云样式
 .personalData{
 	height: 300px;
@@ -357,5 +514,41 @@ export default {
 		}	
 	}
 }
-
+//广告位
+.advertising{
+	height: 78px;
+	>ul{
+		>li{
+			float: left;
+			margin-right: 8px;
+			margin-left: 8px;
+			width:97px;
+			height:97px;
+			>img{
+				width: 100%;
+				height: 66px;
+			}
+			>h1{
+				font-size: 14px;
+				text-align: center;
+				margin-top: 4px;
+				font-weight: normal;
+			}
+		}
+	}
+}
+.advertising::before{
+	content: '广告宣传 X';
+    display: block;
+	position: absolute;
+	width: 80px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	left:5px;
+	top: 3px;
+	color: rgba(0, 0, 0, 0.678);
+	background-color: rgba(255, 255, 255,0.5);
+	cursor: pointer;
+}
 </style>

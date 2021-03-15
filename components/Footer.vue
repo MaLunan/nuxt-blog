@@ -3,7 +3,7 @@
   	<el-row type="flex" justify="center">
   		<el-col :span="24" class="footer">
 			<div>Copyright © 2020 Malunan</div>
-			<nuxt-link to='https://beian.miit.gov.cn/#/Integrated/index'>京ICP备19053813号-1</nuxt-link>
+			<nuxt-link class="textcolor" to='https://beian.miit.gov.cn/#/Integrated/index'>京ICP备19053813号-1</nuxt-link>
   		</el-col>
   	</el-row>
   </div>
@@ -21,5 +21,12 @@
 		text-align:center;
 		line-height:60px;
 		font-size: 18px;
+		.textcolor{
+			color:@hovercolor;
+			margin-left: 5px;
+		}
+		.textcolor:hover{
+			font-weight: bold;
+		}
 	}
 </style>

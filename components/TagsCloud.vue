@@ -14,9 +14,9 @@
 					{ display: 'inline-block' },
 					{ color: item.rcolor }
 				]"
-				@click="toUrl(item.url)"
+				@click="toUrl(item.ID,item.taxonomy_name)"
 			>
-				{{ item.name }}
+				{{ item.taxonomy_name}}
 			</div>
 		</div>
 	</div>
@@ -55,12 +55,12 @@ export default {
 	created() {
 	},
 	mounted() {
-		this.init();
+			this.init();
 		 	//使球开始旋转
-		setInterval(() => {
-			this.rotateX();
-			this.rotateY();
-		}, 10);
+			setInterval(() => {
+				this.rotateX();
+				this.rotateY();
+			}, 10);
 	},
 	methods: {
 		init() {
@@ -122,17 +122,17 @@ export default {
 		},
 		listener(event) {
 			//响应鼠标移动
-			var refX = this.$refs.Panel.offsetLeft;
-			var refY = this.$refs.Panel.offsetTop;
-			var x = event.clientX - refX - this.CX;
-			var y = event.clientY - refY - this.CY;
+			// var refX = this.$refs.Panel.offsetLeft;
+			// var refY = this.$refs.Panel.offsetTop;
+			// var x = event.clientX - refX - this.CX;
+			// var y = event.clientY - refY - this.CY;
 
-			// this.x + CX - this.ele.offsetWidth/2 +"px";
-			this.speedY = x * 0.0001 > 0 ? Math.min(this.radius * 0.00002, x * 0.0001) : Math.max(-this.radius * 0.00002, x * 0.0001);
-			this.speedX = y * 0.0001 > 0 ? Math.min(this.radius * 0.00002, y * 0.0001) : Math.max(-this.radius * 0.00002, y * 0.0001);
+			// // this.x + CX - this.ele.offsetWidth/2 +"px";
+			// this.speedY = x * 0.0001 > 0 ? Math.min(this.radius * 0.00002, x * 0.0001) : Math.max(-this.radius * 0.00002, x * 0.0001);
+			// this.speedX = y * 0.0001 > 0 ? Math.min(this.radius * 0.00002, y * 0.0001) : Math.max(-this.radius * 0.00002, y * 0.0001);
 		},
-		toUrl(url) {
-			this.$router.push({path:url})
+		toUrl(ID,taxonomy_name) {
+			this.$router.push({path:'/articleComents/'+ID,query:{type:ID,name:taxonomy_name}})
 		}
 	}
 };

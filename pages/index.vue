@@ -56,7 +56,8 @@
 					<p class="textthree">
 						{{textData(item.post_content)}}
 					</p>
-					<!-- 标签栏 -->
+				</div>
+				<!-- 标签栏 -->
 					<div class="particulars">
 						<span class="iconfont icon-User">{{item.post_author}}</span>
 						<span class="separator">/</span>
@@ -76,7 +77,6 @@
 							{{item.commentCount}}
 						</nuxt-link>
 					</div>
-				</div>
 			</div>	
 			<pagination 
 				:total='page.total' 
@@ -132,35 +132,14 @@
 			</div>
 			<!-- 标签云 -->
 			<div class="personalData">
-				<TagsCloud :useArray="useArray" :boxWidth="300" :speed="400" :randomColor="true"></TagsCloud>
+				<TagsCloud :useArray="wpTaxonomy" :boxWidth="300" :speed="400" :randomColor="true"></TagsCloud>
 			</div>
 			<!-- 最新留言 -->
 			<div class="divPrevious">
 				<h3 class="widget_title">最新留言</h3>
 				<ul class="comment_ul">
-					<li class="comment_li textone">
-						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
-					</li>
-					<li class="comment_li textone">
-						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
-					</li>
-					<li class="comment_li textone">
-						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
-					</li>
-					<li class="comment_li textone">
-						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
-					</li>
-					<li class="comment_li textone">
-						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
-					</li>
-					<li class="comment_li textone">
-						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
-					</li>
-					<li class="comment_li textone">
-						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
-					</li>
-					<li class="comment_li textone">
-						<span class="comment_name">malunan : </span><span>JSP网站从Windows迁移到宝塔站从Windows迁移到宝塔</span>
+					<li class="comment_li textone" v-for="(item,index) in wpComments" :key='index'>
+						<nuxt-link :to='item.comment_ID'><span class="comment_name">malunan : </span><span>{{item.comment_content}}</span></nuxt-link>
 					</li>
 				</ul>
 			</div>
@@ -190,32 +169,11 @@ export default {
 			active:'index',
 			img:{
 				img1:require("../assets/img/img1.jpg"),
-				img2:require("../assets/img/img2.jpg"),
-				img3:require("../assets/img/img3.jpg"),
-				img4:require("../assets/img/img4.jpg")
 			},
-			// 标签云
-			useArray: [  
-				{  
-					"name":"javascript",
-					"url":"Enoch_Eastwood8658@twipet.com"
-				},
-				{  
-					"name":"node.js",
-					"url":"Doris_Wade7948@bulaffy.com"
-				},
-				{  
-					"name":"前端基础知识",
-					"url":"Ilona_Vallory9282@corti.com"
-				},
-				{  
-					"name":"高级进阶",
-					"url":"Jenna_Kennedy5321@bretoux.com"
-				},
-			],
 			isRotate:false,
 			rotateVal:1,
 			InterVal:null,
+			
 		}
 	},
 	async asyncData({app,error}) {
@@ -237,8 +195,9 @@ export default {
 		let wpSwiper= await awaitWrap(app.$axios.get('/blog/wpPosts/getWpSwiper'))
 		let wpTaxonomy=await awaitWrap(app.$axios.get('/blog/wpPosts/getTaxonomy'))
 		let wpUser=await awaitWrap(app.$axios.get('/blog/wpPosts/getUser'))
-		if(WpPosts[0]||wpSwiper[0]||wpTaxonomy[0]||wpUser[0]){
-			error({ statusCode: 500, message: 'Post not found' })
+		let wpComments=await awaitWrap(app.$axios.post('/blog/wpPosts/getAllComments'))
+		if(WpPosts[0]||wpSwiper[0]||wpTaxonomy[0]||wpUser[0]||wpComments[0]){
+			error({ statusCode: 500, message: WpPosts[0]||wpSwiper[0]||wpTaxonomy[0]||wpUser[0]||wpComments[0] })
 		}else{
 			return {
 				WpPosts:WpPosts[1].data.data.datas,
@@ -246,6 +205,7 @@ export default {
 				wpTaxonomy:wpTaxonomy[1].data.data.datas,
 				wpUser:wpUser[1].data.data.datas,
 				WpPostsData:WpPostsData[1].data.data.datas,
+				wpComments:wpComments[1].data.data.data,
 				page:{
 					total:WpPostsData[1].data.data.Count,
 					current:WpPostsData[1].data.data.page,
@@ -304,7 +264,7 @@ export default {
 			this.wpTaxonomy.forEach(item=>{
 				t.forEach(ite=>{
 					if(item.ID===ite){
-					typeList.push(item.taxonomy_nanme)
+					typeList.push(item.taxonomy_name)
 					}
 				})
 			})
@@ -332,7 +292,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 //swiper 高度自适应
 .swiper{
 	max-height: 400px;
@@ -361,32 +321,32 @@ export default {
 	color: @hovercolor;
 }
 // swiper切换按钮变圆
-.el-carousel__button{
+/deep/ .el-carousel__button{
 	width: 12px;
 	height: 12px;
 	border-radius: 50%;
 }
 // swiper切换按钮位置
-.el-carousel__indicators{
+/deep/ .el-carousel__indicators{
 	position: absolute;
 	right: 20px;
 	width: auto;
 	
 }
-.el-carousel__indicators--horizontal{
+/deep/ .el-carousel__indicators--horizontal{
 	left:auto;
 }
 // swiper圆角
-.el-carousel--horizontal{
+/deep/ .el-carousel--horizontal{
 	border-radius: 40px;
 }
 //swiper内容高度自适应
-.el-carousel__container{
+/deep/ .el-carousel__container{
 	height: 100%;
 }
 // 通用卡片样式
 .cardcss{
-	height: 250px;
+	height: 214px;
 	border-radius: 18px;
 	margin-bottom: 20px;
 	overflow: hidden;
@@ -395,19 +355,19 @@ export default {
 }
 //热评文章
 .top-list{
-	
+	height: 250px;
 }
 // 文章列表
 .article-box{
-	height: 200px;
+	height: 214px;
 	padding: 18px 24px;
+	position: relative;
 	>.article-left{
-		height:100%;
+		height: calc(100% - 24px);
 		margin-right:224px;
 		// background:white;
 		// border-radius: 15px;
 		box-sizing: border-box;
-		position: relative;
 		>p{
 			font-size: 18px;
 			margin: 24px 0 29px;
@@ -420,16 +380,16 @@ export default {
 			cursor: pointer;
 			transition: all 1s initial;
 		}
-		.particulars{
+	}
+	.particulars{
 			position: absolute;
 			bottom: 0;
-			left: 0;
+			left: 24px;
 			height: 24px;
 			.iconfont{
 				font-size: 12px!important;
 			}
 		}
-	}
 	>.article-left-isno{
 		margin-left: 224px;
 		margin-right: 0;
@@ -437,7 +397,7 @@ export default {
 	>.article-right{
 		float:right;
 		width:200px;
-		height:100%;
+		height:200px;
 		background:#afa;
 		overflow: hidden;
 		border-radius: 15px;
@@ -460,12 +420,12 @@ export default {
     box-sizing: border-box;
 	min-height: 0px;
 	padding-left: 20px;
-	padding-right: 15px;
 }
 // 列表样式
 .todo-list{
 	padding:18px 24px;
 	overflow: hidden;
+	height: 250px;
 	>li{
 		margin-bottom: 12px;
 		overflow: hidden;

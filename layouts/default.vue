@@ -9,7 +9,7 @@
 export default{
   mounted () {
     if (process.browser) { // bacnground.js
-        // var bg = require('../utils/background')      
+        var bg = require('../utils/background')      
         var ck = require('../utils/clickRandom')      
         var copy = require('../utils/copy')      
     }
