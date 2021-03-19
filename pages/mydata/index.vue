@@ -6,7 +6,7 @@
 		<div class="navigation">
 			<el-breadcrumb separator-class="el-icon-sugar">
 			<el-breadcrumb-item :to="{ path: '/' }"><i class="iconfont icon-home"></i>首页</el-breadcrumb-item>
-			<el-breadcrumb-item>留言区</el-breadcrumb-item>
+			<el-breadcrumb-item>关于我</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="w1200">
