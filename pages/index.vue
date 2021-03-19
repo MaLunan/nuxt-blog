@@ -139,7 +139,7 @@
 				<h3 class="widget_title">最新留言</h3>
 				<ul class="comment_ul">
 					<li class="comment_li textone" v-for="(item,index) in wpComments" :key='index'>
-						<nuxt-link :to='item.comment_ID'><span class="comment_name">malunan : </span><span>{{item.comment_content}}</span></nuxt-link>
+						<nuxt-link :to="'/article/'+item.comment_post_ID"><span class="comment_name">{{item.comment_author}} : </span><span>{{item.comment_content}}</span></nuxt-link>
 					</li>
 				</ul>
 			</div>
@@ -166,7 +166,7 @@ if (process.browser) { // 在这里根据环境引入wow.js
 export default {	
 	data() {
 		return {
-			active:'index',
+			active:'首页',
 			img:{
 				img1:require("../assets/img/img1.jpg"),
 			},
@@ -218,7 +218,6 @@ export default {
 	methods: {
 		//外部链接跳转
 		open(url){
-			console.log(url)
 			window.open(url)
 		},
 		//请求数据
@@ -293,6 +292,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+img{border:0;vertical-align:middle; width: 100%;height: 100%; }
 //swiper 高度自适应
 .swiper{
 	max-height: 400px;

@@ -9,6 +9,10 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+
+    ],
+    script:[
+     
     ]
   },
 
@@ -22,7 +26,6 @@ export default {
     'animate.css/animate.css',
   ],
   script:[
-
   ],
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [

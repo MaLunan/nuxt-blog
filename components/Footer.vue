@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overflow foo">
   	<el-row type="flex" justify="center">
   		<el-col :span="24" class="footer">
 			<div>Copyright © 2020 Malunan</div>
@@ -28,5 +28,9 @@
 		.textcolor:hover{
 			font-weight: bold;
 		}
+	}
+	.foo{
+		float: left;
+		width: 100%;
 	}
 </style>

@@ -4,7 +4,7 @@
 	<!-- 左侧文章内容 -->
 	<div class="w1200 top24">
         <div class="navigation">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb separator-class="el-icon-sugar">
             <el-breadcrumb-item :to="{ path: '/' }"><i class="iconfont icon-home"></i>首页</el-breadcrumb-item>
             <el-breadcrumb-item>{{commentName}}</el-breadcrumb-item>
             </el-breadcrumb>
@@ -48,7 +48,14 @@
 					</div>
 				</div>
 			</div>	
+			<div v-if="!WpPostsData.length" class="noData cardcss">
+				<div class="titletag">
+					空
+				</div>
+				这个板块还没有数据呢~~~<i class="iconfont icon-Inbox"></i>
+			</div>
 			<pagination 
+				v-if="WpPostsData.length"
 				:total='page.total' 
 				:page='page.current' 
 				:limit='page.size'
@@ -109,7 +116,7 @@
 				<h3 class="widget_title">最新留言</h3>
 				<ul class="comment_ul">
 					<li class="comment_li textone" v-for="(item,index) in wpComments" :key='index'>
-						<nuxt-link :to='item.comment_ID'><span class="comment_name">malunan : </span><span>{{item.comment_content}}</span></nuxt-link>
+						<nuxt-link :to="'/article/'+item.comment_post_ID"><span class="comment_name">{{item.comment_author}} : </span><span>{{item.comment_content}}</span></nuxt-link>
 					</li>
 				</ul>
 			</div>
@@ -136,15 +143,12 @@ if (process.browser) { // 在这里根据环境引入wow.js
 export default {	
 	data() {
 		return {
-			active:'index',
-			isRotate:false,
-			rotateVal:1,
-			InterVal:null,
+			active:'知识笔记',
+			actives:'',
 		}
 	},
     watchQuery: true,
 	async asyncData({app,error,query}) {
-        console.log(app)
 		//公共方法
 		const awaitWrap = (promise) => {
 		return promise
@@ -153,7 +157,6 @@ export default {
 		}
 		// 服务器端渲染数据
 		let WpPosts =await awaitWrap(app.$axios.get('/blog/wpPosts/getWpPosts'))
-        console.log(query.type,query.name)
 		let WpPostsData =await awaitWrap(app.$axios({
 				method:'get',
 				url:'/blog/wpPosts/getWpPosts',
@@ -180,6 +183,7 @@ export default {
 					size:WpPostsData[1].data.data.size,
 				},
                 commentName:query.name,
+				type:query.type
 			}
 		}
 		
@@ -198,7 +202,8 @@ export default {
 				params:{
 					page:this.page.current,
 					size:this.page.size,
-					sort:'post_date'
+					sort:'post_date',
+					type:this.type
 				}
 			})
 			return {WpPostsData:WpPostsData.data.data.datas,
@@ -262,7 +267,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+img{border:0;vertical-align:middle; width: 100%;height: 100%; }
 // 通用卡片样式
 .cardcss{
 	height: 214px;
@@ -271,6 +276,12 @@ export default {
 	overflow: hidden;
 	position: relative;
 	background-color: @background;
+}
+//暂无数据
+.noData{
+	line-height: 214px;
+	text-align: center;
+	font-size: 18px;
 }
 .top-list{
 	height: 250px;
@@ -339,53 +350,7 @@ export default {
 	min-height: 0px;
 	padding-left: 20px;
 }
-// 列表样式
-.todo-list{
-	padding:18px 24px;
-	overflow: hidden;
-	height: 250px;
-	>li{
-		margin-bottom: 12px;
-		overflow: hidden;
-		color: @Stextcolor;
-		>a{
-			color: black;
-			font-size: 18px;
-			margin-left: 30px;
-			margin-right: 60px;
-		}
-		>a:hover{
-			color: @hovercolor;
-		}
-	}
-	>li:nth-of-type(1) > span:first-of-type{
-		background:rgb(240, 17, 32) !important;
-	}
-	>li:nth-of-type(2) > span:first-of-type{
-		background:#ff7a21 !important;
-	}
-	>li:nth-of-type(3) > span:first-of-type{
-		background:#1681E7 !important;
-	}
-	>li:nth-of-type(4) > span:first-of-type{
-		background:#37b760 !important;
-	}
-	>li:nth-of-type(5) > span:first-of-type{
-		background:rgb(29, 235, 235) !important;
-	}
-	>li:nth-of-type(6) > span:first-of-type{
-		background:rgb(138, 255, 5) !important;
-	}
-}
-// 时间样式
-.date{
-	float: right;
-    color: #999;
-    position: relative;
-    top: 2px;
-	margin-left: 8px;
-	font-size: 16px;
-}
+
 // 标签云样式
 .personalData{
 	height: 300px;
@@ -513,42 +478,5 @@ export default {
 			}
 		}	
 	}
-}
-//广告位
-.advertising{
-	height: 78px;
-	>ul{
-		>li{
-			float: left;
-			margin-right: 8px;
-			margin-left: 8px;
-			width:97px;
-			height:97px;
-			>img{
-				width: 100%;
-				height: 66px;
-			}
-			>h1{
-				font-size: 14px;
-				text-align: center;
-				margin-top: 4px;
-				font-weight: normal;
-			}
-		}
-	}
-}
-.advertising::before{
-	content: '广告宣传 X';
-    display: block;
-	position: absolute;
-	width: 80px;
-	height: 20px;
-	text-align: center;
-	line-height: 20px;
-	left:5px;
-	top: 3px;
-	color: rgba(0, 0, 0, 0.678);
-	background-color: rgba(255, 255, 255,0.5);
-	cursor: pointer;
 }
 </style>

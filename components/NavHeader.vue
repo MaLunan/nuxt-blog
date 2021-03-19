@@ -1,33 +1,20 @@
 <template>
 <div class="navbox">
     <div class="nav w1200">
-      <!-- 适应小窗口，竖向导航 -->
-      <i :class="['nav-b','iconfont',!isfold?'icon-Menu':'icon-MenuFold']" @click="fold">
-        <ul class="nav-b-ul" v-show="isfold">
-            <li class="nav-b-li" :class="classA == index ? 'active' : '' "  @click="selected(index,item)"  v-for="(item,index) in configNav" :key="index">
-                <nuxt-link :to='item.path' class="nav-b-text" @click="showToggle(index)">{{item.name}}</nuxt-link>
-                    <ul class="menub_ul animate__animated animate__fadeIn" :class="{'active' :index===isShow}">
-						<li class="menub_li" v-for="(nav,ind) in item.subItems" :class=" classB == nav ? 'active' : '' "  @click="menuselected(nav,index)" :key="ind">
-						<nuxt-link class="menub_ul_text" :to="nav.link" :class="{'active':nav.link == linkClick}"  @click="treeNavSwitch(nav)">{{nav.text}}</nuxt-link>
-						</li>
-                    </ul>
-            </li>
+        <ul class="nav_ul clearfix">
+          <li :class="['nav_li',active===item.name?'active':'']" v-for="(item,index) in configNav" :key="index">
+              <nuxt-link :to='item.path'>
+                <span :class="[item.icon,'iconfont']"></span>{{item.name}}
+              </nuxt-link>
+              <ul class="cascade_ul animate__animated animate__flipInY" v-if="item.subItems">
+                  <li :class="['cascade_li',val.name===actives?'active':''] " v-for="(val,ind) in item.subItems" :key="ind">
+                    <nuxt-link :to='val.path'>
+                      {{val.name}}
+                    </nuxt-link>
+                  </li>
+              </ul>
+          </li>
         </ul>
-      </i>
-      <h1 class="logo">{{logo}}</h1>
-      <!-- 横向导航 -->
-      <div class="nav-a ">
-        <ul class="nav-a-ul">
-            <li class="nav-a-li" :class="classA == index ? 'active' : '' "  @click="selected(index,item)"  v-for="(item,index) in configNav" :key="index">
-                <nuxt-link :to='item.path' class="nav-a-text" @click="showToggle(index)">{{item.name}}</nuxt-link>
-                    <ul class="menu_ul animate__animated animate__fadeIn" :class="{'active' :index===isShow}">
-						<li class="menu_li" v-for="(nav,ind) in item.subItems" :class=" classB == nav ? 'active' : '' "  @click="menuselected(nav,index)" :key="ind">
-						<nuxt-link class="menu_ul_text" :to="nav.link" :class="{'active':nav.link == linkClick}"  @click="treeNavSwitch(nav)">{{nav.text}}</nuxt-link>
-						</li>
-                    </ul>
-            </li>
-        </ul>
-      </div>
     </div>
 </div>
 </template>
@@ -37,82 +24,71 @@
 export default {
   name: "Header",
   props:{
+    //当前页面
     active:{
       type:String,
-      default:'/'
+      default:'首页'
+    },
+  //当前二级页面
+    actives:{
+      type:String,
+      default:''
     }
   },
   data() {
     return {
-      show: false,
-      isfold:false,
-      classA: 0,
-      classB: 0,
-      isShow: 0,
-      linkClick: "",
-      logo:'zhutishizhe',
      configNav: [
         {
           name: "首页",
           path:'/',
+          icon:'icon-Home'
         },
         {
           name: "知识笔记",
           path:'',
+          icon:'icon-bulb',
            subItems:[
-                        { link:'/article',text: '基础知识'},
-                        { link:'/',text: '进阶知识' },
-                        { link:'',text: 'BUG' },
-                        { link:'',text: '面试经' }
+                        { path:{path:'/articleComents/1',query:{name:'基础知识',type:'86109da0-884c-11eb-a72d-fdca0855ff02'}},name: '基础知识'},
+                        { path:{path:'/articleComents/2',query:{name:'进阶知识',type:'b4c69fa0-884c-11eb-a72d-fdca0855ff02'}},name: '进阶知识' },
+                        { path:{path:'/articleComents/3',query:{name:'BUG',type:'e6f65f10-884c-11eb-a72d-fdca0855ff02'}},name: 'BUG' },
+                        { path:{path:'/articleComents/4',query:{name:'面试经',type:'fe8b34c0-884c-11eb-a72d-fdca0855ff02'}},name: '面试经' }
                     ]
         },
         {
           name: "软件教程分享",
-          path:'/',
+          path:'/tools',
+          icon:'icon-customer-service',
         },
         {
           name: "个人归档",
-          path:'/',
+          path:'/timeline',
+          icon:'icon-book',
         },
         {
           name: "blog留言",
-          path:'/',
+          path:'/comments',
+          icon:'icon-Profile',
         },
         {
           name: "关于我",
-          path:'/',
+          path:'/mydata',
+          icon:'icon-sketch-circle',
         }
       ]
     }
   },
   methods: {
-    selected: function(index,item) {
-		if(item.subItems){
-			return false
-		}
-	  this.classA = index;
-	  
-    },
-     menuselected: function(nav,index) {
-	  this.classB = nav;
-		this.selected(index,{})
-    },
-    showToggle: function(index) {
-      this.isShow = index;
-    },
-    treeNavSwitch: function(nav) {
-	  this.linkClick = nav.link;
-    },
-    fold(){
-      this.isfold=!this.isfold;
-    }
+
   }
-};
+}
 </script>
 
 <style lang='less' scoped>
 .navbox{
   background-color:rgba(104, 94, 72, 0.4) ;
+}
+.iconfont{
+  margin-right: 4px;
 }
 .nav {
   color:@textcolor;
@@ -126,153 +102,84 @@ export default {
   overflow:visible;
   // background-color:rgba(104, 94, 72, 0.4) ;
 }
-.nav-a {
-  cursor: pointer;
-  float: right;
-  margin-left: 50px;
-  letter-spacing: 4px;
-  position: relative;
+.nav_ul{
+  height: 65px;
+  >li{
+    list-style: none;
+    float: left;
+    margin-right:40px;
+    line-height: 65px;
+    position: relative;
+  }
+  .nav_li::before {
+    width: 0;
+    height: 2px;
+    position: absolute;
+    bottom: 1px;
+    left: 50%;
+    background-color: #0188FB;
+    content: '';
+    transition: all .6s;
+    z-index: -1;
+  }
+  .nav_li:hover.nav_li::before{
+      width: 100% !important;
+      left: 0 !important;
+      
+  }
+  .nav_li:hover .cascade_ul{
+      display: block;
+      
+  }
+  .active.nav_li::before{
+      width: 100% !important;
+      left: 0 !important;
+  }
+  .active a{
+    color: @hovercolor!important;
+  }
 }
-.logo{
-  cursor: pointer;
-  float: left;
-  // margin-left: 50px;
-  letter-spacing: 4px;
-  position: relative;
-}
-.nav-a-ul {
-  list-style: none;
-}
-.nav-a-li {
-  display: inline-block;
-  margin-left: 30px;
-  height: 60px;
-}
-.nav-a-text {
-  font-size: 14px;
-  color: @textcolor;
-  line-height: 58px;
-  text-decoration: none;
-}
-.menu_ul {
-  width: 130px;
-  list-style: none;
-  background: @TKbackground;
-  border-radius: 3px;
-  z-index: 999;
-  position: absolute;
-  top: 58px;
-  left: 67px;
-  display: none;
-}
-.menu_li {
-  height: 30px;
-  line-height: 30px;
-  padding-left: 12px;
-}
-.menu_ul_text {
-  font-size: 14px;
-  color: @Stextcolor;
-  letter-spacing: 0;
-  line-height: 30px;
-  text-decoration: none;
-  padding-left: 6px;
-}
-.nav-a-li:hover {
-  border-bottom: 2px solid @bordercolor;
-}
-.nav-a-li:hover >a{
-  color:@hovercolor;
-}
-.nav-a-li.active {
-  border-bottom: 2px solid @bordercolor;
-}
-.nav-a-li:hover .menu_ul {
-  display: block;
-}
-.menu_ul_text:hover {
-  color: @hovercolor;
-}
-.menu_li.active .menu_ul_text{
+ a{
+    color: white;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+  a:hover{
     color: @hovercolor;
-}
-.nav-b{
+  }
+.cascade_ul{
   display: none;
-  font-size: 24px;
-  margin-left: 15px;
-  float: left;
-  cursor:pointer;
-  position: relative;
+  position: absolute;
+  top: 65px;
+  width: 150px;
+  background:#46333361;
+  z-index: 99;
+  .cascade_li{
+    background:#46333361;
+    height: 40px;
+    color: white;
+    line-height: 40px;
+    padding-left: 40px;
+    position: relative;
+  }
+  .cascade_li::after {
+    width: 10px;
+    height: 2px;
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    background-color: @hovercolor;
+    content: '';
+    transition: all .6s;
+    z-index: -1;
+    opacity: 0;
+  }
+  .cascade_li:hover.cascade_li::after {
+    opacity: 1;
+  }
+  .actives a{
+    color: @hovercolor !important;
+  }
 }
-// 竖着导航
-    .nav-b-ul {
-        position: absolute;
-        top: 60px;
-        z-index: 100;
-        width: 140px;
-        height: auto;
-        list-style: none;
-        background-color:@TKbackground;
-      }
-      .nav-b-li {
-        display: inline-block;
-        height: 60px;
-        width: 100%;
-        text-align: center;
-         border-bottom: 1px solid grey;
-      }
-      .nav-b-text {
-        font-size: 14px;
-        color:@Stextcolor;
-        line-height: 58px;
-        text-decoration: none;
-      }
-      .menub_ul {
-        width: 140px;
-        height: auto;
-        list-style: none;
-        background-color:@TKbackground;
-        z-index: 999;
-        position: absolute;
-        top: 90px;
-        left: 140px;
-        display: none;
-      }
-      .menub_li {
-       display: inline-block;
-        height: 60px;
-        width: 110px;
-        text-align: center;
-        border-bottom: 1px solid grey;
-      }
-      .menub_ul_text {
-        padding-left: 6px;
-        font-size: 14px;
-        color: @Stextcolor;
-        line-height: 58px;
-        text-decoration: none;
-      }
-      .nav-b-li>a{
-        height: 80%;
-        display:inline-block;
-      }
-      .nav-b-li:hover >a{
-        border-bottom: 2px solid @bordercolor;
-        color:@hovercolor;
-      }
-      .nav-b-li.active a{
-        border-bottom: 2px solid @bordercolor;
-      }
-      /* .nav-a-li:active {
-        border-bottom: 2px solid @bordercolor;
-      } */
-      .nav-b-li:hover .menub_ul {
-        display: block;
-      }
-      .menub_ul_text:hover {
-        color: @hovercolor;
-      }
-      .menub_li.active .menub_ul_text{
-          color: @hovercolor;
-      }
 </style>
