@@ -6,16 +6,16 @@
 		<div class="navigation">
 			<el-breadcrumb separator-class="el-icon-sugar">
 			<el-breadcrumb-item :to="{ path: '/' }"><i class="iconfont icon-home"></i>首页</el-breadcrumb-item>
-			<el-breadcrumb-item>软件教程分享</el-breadcrumb-item>
+			<el-breadcrumb-item>MaLunan实验室</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="w1200">
             <div class="cardcss">
-				<div class="tools_box" v-for="(item,index) in ToolsTaxonomy"  :key="index">
+				<div class="tools_box" v-for="(item,index) in dataList"  :key="index">
 					<h1 class="tools_title">{{item.title}}</h1>
 					<ul class="tools_ul clearfix wow fadeIn" data-wow-duration='2s'>
-						<li class="tools_li"  v-for="(tem,ind) in item.toolsTitle" :key='ind'>
-							<nuxt-link :to="'/tools/'+tem._id+'?name='+tem.name">
+						<li class="tools_li"  v-for="(tem,ind) in item.moduleList" :key='ind'>
+							<nuxt-link :to="tem.link">
 								<h3 class="textone">{{tem.name}}</h3>
 								<div class="textTow text_style">
 									{{tem.description}}
@@ -27,7 +27,7 @@
 			</div>
             <Exceptional/>
             <div class="tools">
-                <Comment ID='tools' title="软件教程分享"></Comment>	
+                <Comment ID='malunan' title="MaLunan实验室"></Comment>	
             </div>
 		</div>
 	</div>
@@ -42,35 +42,30 @@ if (process.browser) { // 在这里根据环境引入wow.js
 export default {
 	data() {
 		return {
-			active:'软件教程分享',
+			active:'MaLunan实验室',
 			actives:'',
+            dataList:[
+                {
+                    title:'组件模块',
+                    moduleList:[
+                        {
+                            name:'留言板',
+                            description:'邮箱留言,留言审核,可变字体头像,emoji表情',
+                            link:'/comments'
+                        }
+                    ]
+                },
+            ]
 		}
-	},
-	async asyncData({app,error,params}) {
-		//公共方法
-		const awaitWrap = (promise) => {
-		return promise
-		.then(data => [null, data])
-		.catch(err => [err, null])
-		}
-		let ToolsTaxonomys=await awaitWrap(app.$axios.get('/blog/wpPosts/getAllToolsTaxonomy'))
-		if(ToolsTaxonomys[0]){
-			error({ statusCode: 500, message: ToolsTaxonomys[0] })
-		}else{
-			return {
-				ToolsTaxonomy:ToolsTaxonomys[1].data.data.datas,
-			}
-		}
-		
 	},
 	methods: {
 	
 	},
 	head() {
 		return {
-			title:'软件教程分享-马鲁南的IT技术博客',
+			title:'MaLunan实验室-马鲁南的IT技术博客',
 			meta:[
-				{hid:'description',name:'description',content:'软件教程分享-马鲁南的IT技术博客,免费软件下载,技术分享,安装教程'},
+				{hid:'description',name:'description',content:'MaLunan实验室-马鲁南的IT技术博客,免费软件下载,技术分享,安装教程'},
 				{hid:'keywords',name:'keywords',content:'马鲁南,互联网,自媒体,马鲁南博客,新鲜科技,科技博客,独立博客,个人博客,原创博客,前端,前端开发,全栈,全栈开发,nuxt,nuxtjs,vue,vuejs,node.js'},
 				{hid:'author',content:'malunan'}
 			]
@@ -123,12 +118,12 @@ export default {
 	text-align: center;
 	padding: 24px;
 	border-radius: 24px;
-	box-shadow: 6px 6px 1px #92c5c3;
+	box-shadow: 6px 6px 1px #a7544bad;
 	transition : all 0.5s ease;
 }
 .tools_li:hover{
 	font-size: 18px;
-	box-shadow: 8px 8px 5px #92c5c3;
+	box-shadow: 8px 8px 5px #a7544bad;
 }
 .text_style{
 	font-size: 14px;

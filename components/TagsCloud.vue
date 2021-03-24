@@ -25,12 +25,13 @@
 <script>
 import Vue from 'vue';
 export default {
-	props: ['useArray', 'boxWidth', 'speed', 'randomColor'],
+	props: ['boxWidth', 'speed', 'randomColor'],
 
 	data() {
 		return {
 			speedX: Math.PI / this.speed,
-			speedY: Math.PI / this.speed
+			speedY: Math.PI / this.speed,
+			useArray:[],
 		};
 	},
 	computed: {
@@ -53,16 +54,23 @@ export default {
 		}
 	},
 	created() {
+		
 	},
 	mounted() {
-			this.init();
-		 	//使球开始旋转
-			setInterval(() => {
-				this.rotateX();
-				this.rotateY();
-			}, 10);
+		this.getTaxonomy()
 	},
 	methods: {
+		getTaxonomy(){
+           this.$axios.get('/blog/wpPosts/getTaxonomy').then(Taxonomy=>{
+				this.useArray=Taxonomy.data.data.datas
+				this.init();
+				//使球开始旋转
+				setInterval(() => {
+					this.rotateX();
+					this.rotateY();
+				}, 10);
+					})		
+				},
 		init() {
 			let winWidth = document.body.clientWidth;
 			if (this.boxWidth > winWidth) {

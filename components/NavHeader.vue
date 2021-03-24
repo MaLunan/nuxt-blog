@@ -7,7 +7,7 @@
                 <span :class="[item.icon,'iconfont']"></span>{{item.name}}
               </nuxt-link>
               <ul class="cascade_ul animate__animated animate__flipInY" v-if="item.subItems">
-                  <li :class="['cascade_li',val.name===actives?'active':''] " v-for="(val,ind) in item.subItems" :key="ind">
+                  <li :class="['cascade_li',val.name===actives?'actives':''] " v-for="(val,ind) in item.subItems" :key="ind">
                     <nuxt-link :to='val.path'>
                       {{val.name}}
                     </nuxt-link>
@@ -58,6 +58,11 @@ export default {
           name: "软件教程分享",
           path:'/tools',
           icon:'icon-customer-service',
+        },
+        {
+          name: "MaLunan实验室",
+          path:'/laboratory',
+          icon:'icon-praise_1',
         },
         {
           name: "个人归档",
@@ -135,7 +140,7 @@ export default {
       width: 100% !important;
       left: 0 !important;
   }
-  .active a{
+  .active>a{
     color: @hovercolor!important;
   }
 }
