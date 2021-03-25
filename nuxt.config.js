@@ -47,7 +47,7 @@ export default {
     {
         test:/\.less$/,
         loaders:'style-loader!css-loader!less-loader'
-    }
+    }, 
  ],
  modules: [
   '@nuxtjs/axios','@nuxtjs/proxy',
