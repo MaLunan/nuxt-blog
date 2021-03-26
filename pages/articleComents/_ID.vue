@@ -87,7 +87,7 @@ export default {
 				method:'get',
 				url:'/blog/wpPosts/getWpPosts',
 				params:{
-                    type:query.type,
+                    name:query.name,
 					sort:'post_date',
 				}
 			})
@@ -115,7 +115,7 @@ export default {
 					page:this.page.current,
 					size:this.page.size,
 					sort:'post_date',
-					type:this.type
+					name:this.type
 				}
 			})
 			return {WpPostsData:WpPostsData.data.data.datas,

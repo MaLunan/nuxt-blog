@@ -48,10 +48,10 @@ export default {
           path:'',
           icon:'icon-bulb',
            subItems:[
-                        { path:{path:'/articleComents/1',query:{name:'基础知识',type:'86109da0-884c-11eb-a72d-fdca0855ff02'}},name: '基础知识'},
-                        { path:{path:'/articleComents/2',query:{name:'进阶知识',type:'b4c69fa0-884c-11eb-a72d-fdca0855ff02'}},name: '进阶知识' },
-                        { path:{path:'/articleComents/3',query:{name:'BUG',type:'e6f65f10-884c-11eb-a72d-fdca0855ff02'}},name: 'BUG' },
-                        { path:{path:'/articleComents/4',query:{name:'面试经',type:'fe8b34c0-884c-11eb-a72d-fdca0855ff02'}},name: '面试经' }
+                        { path:{path:'/articleComents/1',query:{name:'基础知识',type:'基础知识'}},name: '基础知识'},
+                        { path:{path:'/articleComents/2',query:{name:'进阶知识',type:'进阶知识'}},name: '进阶知识' },
+                        { path:{path:'/articleComents/3',query:{name:'BUG',type:'BUG'}},name: 'BUG' },
+                        { path:{path:'/articleComents/4',query:{name:'面试经',type:'面试经'}},name: '面试经' }
                     ]
         },
         {

@@ -4,16 +4,16 @@ var vm = new Vue({})
 
 export default function ({ $axios, redirect }) {
   $axios.onRequest(config => {
-    if (process.browser) {
-        vm.$loading()
-    }
+    // if (process.browser) {
+    //     vm.$loading()
+    // }
   })
 
   $axios.onResponse(response=>{
-      if (process.browser) {
-          let load = vm.$loading();
-          load.close();
-      }
+      // if (process.browser) {
+          // let load = vm.$loading();
+          // load.close();
+      // }
   })
 
   $axios.onError(error => {
