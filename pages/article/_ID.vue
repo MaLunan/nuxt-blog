@@ -133,7 +133,7 @@ export default {
 			title:this.WpPostsData[0].post_title+'- 马鲁南的个人博客',
 			meta:[
 				{hid:'description',name:'description',content:this.WpPostsData[0].description},
-				{hid:'keywords',name:'keywords',content:this.WpPostsData[0].post_label+'个人博客,原创博客,brianlee,brian,前端,前端开发,全栈,全栈开发,nuxt,nuxtjs,vue,vuejs'},
+				{hid:'keywords',name:'keywords',content:this.WpPostsData[0].post_label+'个人博客,原创博客,malunanlee,malunan,前端,前端开发,全栈,全栈开发,nuxt,nuxtjs,vue,vuejs'},
 				{hid:'author',content:'malunan'}
 			]
 		}

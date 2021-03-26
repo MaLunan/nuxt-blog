@@ -1,11 +1,11 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'nuxt-blog',
+    title: '马鲁南的个人It技术博客',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no'},
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: '马鲁南个人博客，是一个记录博主学习和成长的自媒体博客。关注于web前端技术和web全栈技术的学习研究' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
