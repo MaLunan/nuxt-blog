@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100vh">
+  <div>
 	<NavHeader :active="active" :actives='actives'></NavHeader>
 	<!-- 左侧文章内容 -->
 	<div class="w1200 top24">
@@ -55,7 +55,7 @@
 				这个板块还没有数据呢~~~<i class="iconfont icon-Inbox"></i>
 			</div>
 			<pagination 
-				v-if="WpPostsData.length&&WpPostsData.length>=9"
+				v-if="page.total>=9"
 				:total='page.total' 
 				:page='page.current' 
 				:limit='page.size'
@@ -66,7 +66,7 @@
 		</div>
 		<Introduce></Introduce>
 	</div>
-	<Footer/>
+	 
 </div>
 </template>
 
@@ -114,17 +114,15 @@ export default {
 				params:{
 					page:this.page.current,
 					size:this.page.size,
-					sort:'post_date',
-					type:this.type
+					sort:'post_date'
 				}
 			})
-			return {WpPostsData:WpPostsData.data.data.datas,
-					page:{
+			this.WpPostsData=WpPostsData.data.data.datas
+			this.page={
 							total:WpPostsData.data.data.Count,
 							current:WpPostsData.data.data.page,
 							size:WpPostsData.data.data.size,
 						}
-				}
 		},
 		//分页
 		pagination(val){
@@ -264,6 +262,8 @@ img{border:0;vertical-align:middle; width: 100%;height: 100%; }
 		}
 		p{
 			font-size: 14px!important;
+			margin:12px 0 29px!important;
+			
 		}
 	}
 	.particulars{

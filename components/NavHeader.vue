@@ -38,7 +38,7 @@
                 <p class="textTow synopsis">{{wpUser.introduction}}</p>
               </div>
           </div>
-          <ul class="mz_nav_ul clearfix">
+          <ul class="mz_nav_ul">
           <li :class="['mz_nav_li',active===item.name?'active':'']" v-for="(item,index) in configNav" :key="index">
               <nuxt-link :to='item.path'>
                 <span :class="[item.icon,'iconfont']"></span>{{item.name}}
@@ -265,6 +265,8 @@ export default {
   }
   a{
     padding:0 16px;
+    width: auto;
+    height: auto;
   }
   .active>a{
     color: @hovercolor!important;

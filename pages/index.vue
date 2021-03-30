@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100vh">
+  <div>
 	<NavHeader :active="active"></NavHeader>
 	<!-- 左侧文章内容 -->
 	<div class="w1200 top24">
@@ -79,7 +79,7 @@
 					</div>
 			</div>	
 			<pagination 
-				v-if="current>=9"
+				v-if="page.total>=9"
 				:total='page.total' 
 				:page='page.current' 
 				:limit='page.size'
@@ -90,7 +90,7 @@
 		</div>
 		<Introduce></Introduce>
 	</div>
-	<Footer/>
+	 
 </div>
 </template>
 
@@ -147,13 +147,12 @@ export default {
 					sort:'post_date'
 				}
 			})
-			return {WpPostsData:WpPostsData.data.data.datas,
-					page:{
+			this.WpPostsData=WpPostsData.data.data.datas
+			this.page={
 							total:WpPostsData.data.data.Count,
 							current:WpPostsData.data.data.page,
 							size:WpPostsData.data.data.size,
 						}
-				}
 		},
 		//分页
 		pagination(val){
@@ -416,7 +415,7 @@ img{border:0;vertical-align:middle; width: 100%;height: 100%; }
     }
 	//热评文章
 	.todo-list{
-		height: 150px;
+		height: 160px;
 		>li>span {
 			font-size: 12px !important;
 		}

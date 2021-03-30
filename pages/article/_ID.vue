@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100vh">
+  <div>
 	<NavHeader :active="active"></NavHeader>
 	<!-- 左侧文章内容 -->
 	<div class="w1200 top24">
@@ -49,7 +49,7 @@
 		</div>
 		<Introduce></Introduce>
 	</div>
-	<Footer/>
+	 
 </div>
 </template>
 

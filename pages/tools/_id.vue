@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100vh">
+  <div>
 	<NavHeader :active="active"></NavHeader>
 	<!-- 左侧文章内容 -->
 	<div class="w1200 top24">
@@ -34,7 +34,7 @@
             </div>
 		</div>
 	</div>
-	<Footer/>
+	 
 </div>
 </template>
 
@@ -135,4 +135,22 @@ export default {
     color: @hovercolor;
 }
 //数据展现
+</style>
+<style lang="less" scoped>
+@media screen and (max-width: 860px) {
+	.list_li{
+		h2{
+			font-size: 18px;
+		}
+		span{
+			font-size: 14px;
+		}
+		p{
+			font-size: 14px;
+		}
+	}
+}
+@media screen and (max-width: 570px) {
+
+}
 </style>

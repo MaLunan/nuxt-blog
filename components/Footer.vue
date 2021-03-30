@@ -1,11 +1,7 @@
 <template>
-  <div class="overflow foo">
-  	<el-row type="flex" justify="center">
-  		<el-col :span="24" class="footer">
+  <div class="overflow foo footer">
 			<div>Copyright © 2020 Malunan</div>
 			<nuxt-link class="textcolor" to='https://beian.miit.gov.cn/#/Integrated/index'>京ICP备19053813号-1</nuxt-link>
-  		</el-col>
-  	</el-row>
   </div>
 </template>
 
@@ -30,8 +26,9 @@
 		}
 	}
 	.foo{
-		float: left;
 		width: 100%;
+		position: absolute;
+		bottom: 0;
 	}
 </style>
 <style lang="less" scoped>
