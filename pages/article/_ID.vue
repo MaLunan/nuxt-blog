@@ -25,11 +25,13 @@
 						<span to='' class="iconfont icon-eye">
 							{{ WpPostsData[0].browse }}
 						</span>
-						阅读
+						<span>
+							阅读
+						</span>
 						<span to='' class="iconfont icon-Edit" style="margin-left:5px">
 							{{ WpPostsData[0].commentCount }}
 						</span>
-						评论
+						<span>评论</span> 
 						<nuxt-link :to="{ path: '/articleComents/'+(Math.random()*99) ,query:{type:WpPostsData[0].type,name:types(WpPostsData[0].type)}}" class="iconfont icon-Tags" style="margin-left:5px">
 							{{types(WpPostsData[0].type) }}
 						</nuxt-link>
@@ -184,4 +186,23 @@ export default {
 	font-size: 18px;
 }
 
+</style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+	.textBox{
+		font-size: 12px;
+		h1{
+			font-size: 18px;
+		}
+		.particulars{
+			span{
+				display: none;
+			}
+		}
+	}
+}
+@media screen and (max-width: 570px) {
+
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
 <div class="navbox">
-    <div class="nav w1200">
+    <div class="nav w1200 pc">
         <ul class="nav_ul clearfix">
           <li :class="['nav_li',active===item.name?'active':'']" v-for="(item,index) in configNav" :key="index">
               <nuxt-link :to='item.path'>
@@ -15,6 +15,37 @@
               </ul>
           </li>
         </ul>
+    </div>
+    <!-- 小窗口 -->
+    <div class="nav w1200 mz">
+        <i class="icon-Menu iconfont menu" @click="drawer=true">  
+        </i>
+        <el-drawer
+          title="菜单"
+          custom-class='menu-drawer'
+          :visible.sync="drawer"
+          direction='ltr'
+          size='240px'
+          :append-to-body='true'
+          :with-header="false">
+          <div class="title_my clearfix">
+              <div class="left">
+                <img class="imgbox rotate"  :src="wpUser.avatar" alt="头像">
+              </div>
+              	
+              <div class="left text_my">
+                <h1 class="user">{{wpUser.name}} </h1>
+                <p class="textTow synopsis">{{wpUser.introduction}}</p>
+              </div>
+          </div>
+          <ul class="mz_nav_ul clearfix">
+          <li :class="['mz_nav_li',active===item.name?'active':'']" v-for="(item,index) in configNav" :key="index">
+              <nuxt-link :to='item.path'>
+                <span :class="[item.icon,'iconfont']"></span>{{item.name}}
+              </nuxt-link>
+          </li>
+        </ul>
+        </el-drawer>
     </div>
 </div>
 </template>
@@ -37,6 +68,8 @@ export default {
   },
   data() {
     return {
+      drawer:false,//mz菜单
+      wpUser:{},
      configNav: [
         {
           name: "首页",
@@ -45,14 +78,8 @@ export default {
         },
         {
           name: "知识笔记",
-          path:'',
+          path:'/articleComents/1',
           icon:'icon-bulb',
-           subItems:[
-                        { path:{path:'/articleComents/1',query:{name:'基础知识',type:'基础知识'}},name: '基础知识'},
-                        { path:{path:'/articleComents/2',query:{name:'进阶知识',type:'进阶知识'}},name: '进阶知识' },
-                        { path:{path:'/articleComents/3',query:{name:'BUG',type:'BUG'}},name: 'BUG' },
-                        { path:{path:'/articleComents/4',query:{name:'面试经',type:'面试经'}},name: '面试经' }
-                    ]
         },
         {
           name: "软件教程分享",
@@ -82,8 +109,15 @@ export default {
       ]
     }
   },
+  created(){
+        this.getposts()
+    },
   methods: {
-
+    getposts(){
+            this.$axios.get('/blog/wpPosts/getUser').then(res=>{
+                this.wpUser=res.data.data.datas
+            })
+        },
   }
 }
 </script>
@@ -94,6 +128,9 @@ export default {
 }
 .iconfont{
   margin-right: 4px;
+}
+.mz{
+  display: none;
 }
 .nav {
   color:@textcolor;
@@ -186,5 +223,74 @@ export default {
   .actives a{
     color: @hovercolor !important;
   }
+}
+.title_my{
+  padding: 5px;
+  color: white;
+  .imgbox{
+			border-radius: 50%;
+			height: 50px;
+			width: 50px;
+			margin-top: 10px;
+		}
+		.rotate{
+			transition: all 0.1s linear;
+		}
+		.rotate:hover{
+			 transform: rotate(666turn);
+				transition-delay: 1s;
+				transition-property: all;
+				transition-duration: 59s;
+				transition-timing-function: cubic-bezier(.34,0,.84,1);
+		}
+		.user{
+			font-size: 16px;
+			font-weight: bold;
+		}
+    .synopsis{
+			font-size: 12px;
+      margin-top: 5px;
+		}
+    .text_my{
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+}
+.mz_nav_ul{
+  >li{
+    list-style: none;
+    line-height: 40px;
+    position: relative;
+    height: 40px;
+  }
+  a{
+    padding:0 16px;
+  }
+  .active>a{
+    color: @hovercolor!important;
+    }
+}
+/deep/ .menu-drawer{
+   background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  }
+</style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+.pc{
+  display: none;
+}
+.mz{
+  display: block;
+  overflow: hidden;
+  .menu{
+    font-size: 38px;
+    cursor: pointer;
+    margin-left:18px;
+  }
+  }
+}
+@media screen and (max-width: 570px) {
+
 }
 </style>

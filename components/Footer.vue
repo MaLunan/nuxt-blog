@@ -34,3 +34,19 @@
 		width: 100%;
 	}
 </style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+	.footer {
+			height:40px;
+			background:#23282D;
+			color:#666;
+			text-align:center;
+			line-height:40px;
+			font-size: 12px;
+	}
+}
+@media screen and (max-width: 570px) {
+
+}
+</style>

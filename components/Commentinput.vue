@@ -1,20 +1,22 @@
 <template>
   <div class="show_comment">
+      <div class="input_box">
         <el-input 
-        style="width:50%;margin-bottom:5px"
         placeholder='昵称'
         v-model="comment_author"
         :minlength='2'
         >
 
         </el-input>
-        <el-input style="width:49%"
+        <el-input
         placeholder='邮箱'
         :maxlength='50'
         v-model="comment_author_email"
         >
             
         </el-input>
+      </div>
+       
         <el-input
         type="textarea"
         :autosize='{minRows: 3,}'
@@ -154,5 +156,25 @@ export default {
     float: right;
     margin-right: 10px;
     margin-top: 5px;
+}
+.input_box{//input容器
+display: flex;
+margin-bottom: 2px;
+}
+</style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+	.footer {
+			height:40px;
+			background:#23282D;
+			color:#666;
+			text-align:center;
+			line-height:40px;
+			font-size: 12px;
+	}
+}
+@media screen and (max-width: 570px) {
+
 }
 </style>

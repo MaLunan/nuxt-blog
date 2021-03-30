@@ -146,3 +146,27 @@ export default {
 	background-color: @background;
 }
 </style>
+<style lang="less" scoped>
+@media screen and (max-width: 860px) {
+	.tools_title{
+		font-size: 18px;
+	}
+	.tools_title::after{
+		height: 18px;
+	}
+	.tools_li{
+		padding:12px 12px 24px;
+		margin: 12px;
+		width:100px;
+		h3{
+			font-size: 14px;
+		}
+		.textTow{
+			font-size: 12px;
+		}
+	}
+}
+@media screen and (max-width: 570px) {
+
+}
+</style>

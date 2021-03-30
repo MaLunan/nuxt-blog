@@ -40,3 +40,17 @@ export default {
         padding: 0;
     }
 </style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+	.exceptional{
+        padding:0;
+        /deep/.el-dialog{
+            width: 98% !important;
+        }
+    }
+}
+@media screen and (max-width: 570px) {
+
+}
+</style>

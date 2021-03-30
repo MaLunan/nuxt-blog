@@ -6,7 +6,7 @@
         <div class="navigation">
             <el-breadcrumb separator-class="el-icon-sugar">
             <el-breadcrumb-item :to="{ path: '/' }"><i class="iconfont icon-home"></i>首页</el-breadcrumb-item>
-            <el-breadcrumb-item>{{commentName}}</el-breadcrumb-item>
+            <el-breadcrumb-item>{{commentName?commentName:'知识笔记'}}</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
 		<div class="leftW">
@@ -87,7 +87,7 @@ export default {
 				method:'get',
 				url:'/blog/wpPosts/getWpPosts',
 				params:{
-                    name:query.name,
+                    type:query.type,
 					sort:'post_date',
 				}
 			})
@@ -115,7 +115,7 @@ export default {
 					page:this.page.current,
 					size:this.page.size,
 					sort:'post_date',
-					name:this.type
+					type:this.type
 				}
 			})
 			return {WpPostsData:WpPostsData.data.data.datas,
@@ -153,7 +153,7 @@ export default {
 	},
 	head() {
 		return {
-			title:this.commentName+'马鲁南的It技术博客',
+			title:this.commentName?this.commentName+'马鲁南的It技术博客':'知识笔记',
 			meta:[
 				{hid:'description',name:'description',content:'马鲁南个人博客，是一个记录博主学习和成长的自媒体博客。关注于web前端技术和web全栈技术的学习研究。'},
 				{hid:'keywords',name:'keywords',content:'马鲁南,互联网,自媒体,马鲁南博客,新鲜科技,科技博客,独立博客,个人博客,原创博客,前端,前端开发,全栈,全栈开发,nuxt,nuxtjs,vue,vuejs,node.js'},
@@ -247,5 +247,35 @@ img{border:0;vertical-align:middle; width: 100%;height: 100%; }
 		margin-top: -10%;
 		transition: all 1s ease;
 	}
+}
+</style>
+<style lang="less" scoped>
+@media screen and (max-width: 860px) {
+	.cardcss {
+		height: 200px!important;
+	}
+	.advertising{
+		display: none!important;
+	}
+	.article-box{
+		height: 150px!important;
+		h1{
+			font-size: 18px!important;
+		}
+		p{
+			font-size: 14px!important;
+		}
+	}
+	.particulars{
+		span{
+			display: none;
+		}
+		a{
+			padding-right: 8px;
+		}
+	}
+}
+@media screen and (max-width: 570px) {
+
 }
 </style>

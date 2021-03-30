@@ -150,3 +150,12 @@ img{border:0;vertical-align:middle; width: 100%;height: 100%; }
 }
 
 </style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+
+}
+@media screen and (max-width: 570px) {
+
+}
+</style>

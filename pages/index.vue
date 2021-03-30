@@ -79,6 +79,7 @@
 					</div>
 			</div>	
 			<pagination 
+				v-if="current>=9"
 				:total='page.total' 
 				:page='page.current' 
 				:limit='page.size'
@@ -405,5 +406,49 @@ img{border:0;vertical-align:middle; width: 100%;height: 100%; }
 	color: rgba(0, 0, 0, 0.678);
 	background-color: rgba(255, 255, 255,0.5);
 	cursor: pointer;
+}
+</style>
+<style lang="less" scoped>
+@media screen and (max-width: 860px) {
+    // swiper 重置高度
+    .swiper{
+        height: 200px!important;
+    }
+	//热评文章
+	.todo-list{
+		height: 150px;
+		>li>span {
+			font-size: 12px !important;
+		}
+		>li>a{
+			font-size: 12px !important;
+		}
+	}
+	.cardcss {
+		height: 200px!important;
+	}
+	.advertising{
+		display: none!important;
+	}
+	.article-box{
+		height: 150px!important;
+		h1{
+			font-size: 18px!important;
+		}
+		p{
+			font-size: 14px!important;
+		}
+	}
+	.particulars{
+		span{
+			display: none;
+		}
+		a{
+			padding-right: 8px;
+		}
+	}
+}
+@media screen and (max-width: 570px) {
+
 }
 </style>

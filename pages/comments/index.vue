@@ -113,3 +113,16 @@ export default {
 	background-color: @background;
 }
 </style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+	.comment_title {
+		height: 150px;
+		line-height:150px;
+		font-size: 12px;
+	}
+}
+@media screen and (max-width: 570px) {
+
+}
+</style>

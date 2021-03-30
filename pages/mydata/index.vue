@@ -115,3 +115,20 @@ p{
 	color:@hovercolor
 }
 </style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+	.my_title{
+		font-size: 18px;
+	}
+	.my_tag_title{
+		font-size: 14px;
+	}
+	p{
+		font-size: 12px;
+	}
+}
+@media screen and (max-width: 570px) {
+
+}
+</style>

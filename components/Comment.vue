@@ -235,3 +235,47 @@ export default {
 }
 
 </style>
+<style lang="less" scoped>
+
+@media screen and (max-width: 860px) {
+	.write{
+        padding:0 4px 8px !important;
+    }
+    .comment_null{
+        padding: 0 12px 6px!important;
+        height: 100px!important;
+        text-align: center!important;
+        font-size: 14px!important;
+        line-height: 100px!important;
+    }
+    .write_show {
+        padding:4px 4px 4px 0!important;
+    }
+    .reply_btn{
+        display: block !important;
+    }
+    .text_date{
+        display: none !important;
+    }
+    .write_input {
+        margin-top: 0px;
+        p{
+            font-size: 12px;
+        }
+    }
+    .head_img{
+        width: 36px!important;
+        height: 36px!important;
+    }
+    .head_img_background{
+        font-size: 14px!important;
+        line-height:36px !important;
+    }
+    /deep/ .el-input__inner{
+        height: 30px!important;
+    }
+}
+@media screen and (max-width: 570px) {
+
+}
+</style>

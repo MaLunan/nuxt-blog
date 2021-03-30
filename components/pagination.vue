@@ -100,3 +100,16 @@ export default {
     text-align: center;   
 }
 </style>
+<style lang="less" scoped>
+@media screen and (max-width: 860px) {
+ /deep/ .el-pagination__sizes{
+   display: none !important;
+ }
+ /deep/ .el-pagination__jump{
+   display: none !important;
+ }
+}
+@media screen and (max-width: 570px) {
+
+}
+</style>
