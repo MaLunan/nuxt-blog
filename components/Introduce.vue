@@ -58,12 +58,11 @@
     <!-- 友情链接 -->
     <div class="divPrevious">
         <h3 class="widget_title">友情链接</h3>
-        <h3>虚伪以待</h3>
-        <!-- <ul>
-            <li>
-                
+        <ul class="comment_ul">
+            <li class="finds">
+                <a href='http://9977.link'> 惊鸿</a>
             </li>
-        </ul> -->
+        </ul>
     </div>
 </div>
 </template>
@@ -238,5 +237,10 @@ export default {
 			}
 		}	
 	}
+}
+.finds{
+	padding: 12px;
+	font-size: 16px;
+	float:left;
 }
 </style>
