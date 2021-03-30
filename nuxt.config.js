@@ -73,10 +73,10 @@ export default {
   },
   build: {
     transpile: [/^element-ui/],
-    analyze:true,
-    analyze: {
-      analyzerMode: ['static','@/assets/iconfont']
-    },
+    // analyze:true,
+    // analyze: {
+    //   analyzerMode: ['static','ssets/iconfon@/at']
+    // },
 
     /*
     ** You can extend webpack config here
