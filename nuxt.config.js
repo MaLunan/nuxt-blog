@@ -1,4 +1,9 @@
+import env from './env';
 export default {
+  env: {
+    MODE: process.env.MODE
+  },
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: '马鲁南的个人It技术博客',
@@ -84,7 +89,8 @@ export default {
   },
   proxy: {
     '/api': {
-      target: 'http://localhost:3000', // 目标接口域名
+      target:env[process.env.MODE].BASE_URL,
+      // target: 'http://localhost:3000', // 目标接口域名
       // target: 'https://www.zmln1021.cn:3000', // 目标接口域名
       changeOrigin: true, // 表示是否跨域
       pathRewrite: {

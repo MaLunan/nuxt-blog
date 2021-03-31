@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "dev": "cross-env MODE=dev nuxt",
+    "build": "cross-env MODE=prod nuxt build",
+    "start": "cross-env MODE=prod nuxt start",
     "generate": "nuxt generate"
   },
   "config": {
