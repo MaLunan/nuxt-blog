@@ -41,7 +41,8 @@
 				</div>
 				<hr/>
 				<!-- 内容区 -->
-				<div v-html="WpPostsData[0].post_content">
+				<div v-if="WpPostsData[0].editor==='1'" v-html="WpPostsData[0].post_content"></div>
+				<div v-else ref="content"></div>
 				</div>
 				<Exceptional/>
 				<Comment :ID='WpPostsData[0].ID' :title="WpPostsData[0].post_title"></Comment>
@@ -55,9 +56,12 @@
 
 <script>
 if (process.browser) { // 在这里根据环境引入wow.js
-	  var {WOW} = require('wowjs')     
-	   var Prism = require('prismjs')   
-	   require('prismjs/themes/prism-tomorrow.css')   
+	var {WOW} = require('wowjs')     
+	var Prism = require('prismjs')   
+	require('prismjs/themes/prism-tomorrow.css')  
+	require('tui-editor/dist/tui-editor-contents.css') // editor content
+	require('highlight.js/styles/github.css')
+	var Viewer =require('tui-editor/dist/tui-editor-Viewer')
   }
 export default {	
 	data() {
@@ -81,10 +85,17 @@ export default {
 				wpTaxonomy:wpTaxonomy.data.data.datas,
 				WpPostsData:WpPostsData.data.data.datas,
                 commentName:params.name,
-				type:params.type
+				type:params.type,
 			}
 	},
 	methods: {
+		 getHtml() {
+		const instance = new Viewer({    
+			el: this.$refs.content,
+			height:' 500px ', 
+			initialValue :this.WpPostsData[0].post_content,
+		})
+		},
 		//请求数据
 		async getWpPosts(){
 			let WpPostsData =await this.$axios({
@@ -142,7 +153,11 @@ export default {
   },
   mounted() {
      if (process.browser) {  // 在页面mounted生命周期里面 根据环境实例化WOW
-		Prism.highlightAll()
+	 if(this.WpPostsData[0].editor==='2'){
+		 this.getHtml()
+	 }else{
+		 Prism.highlightAll()
+	 }	
          new WOW({
              live: false, 
              offset: 0
