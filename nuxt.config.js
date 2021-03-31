@@ -77,13 +77,20 @@ export default {
   },
   build: {
     transpile: [/^element-ui/],
+    // analyze:true,
+    // analyze: {
+    //   analyzerMode: ['static','ssets/iconfon@/at']
+    // },
 
     /*
     ** You can extend webpack config here
     */
     extend(config, ctx) {
     },
-    vendor: ['axios'] //为防止重复打包
+    vendor: ['axios','swiper','element-ui'] //为防止重复打包
+  },
+  render:{
+    resourceHints: false,
   }
   
 }
