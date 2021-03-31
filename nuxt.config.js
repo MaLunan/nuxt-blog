@@ -30,12 +30,13 @@ export default {
     'animate.css/animate.css',
   ],
   script:[
+    {src:'@/assets/iconfont/iconfont.js'}
   ],
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     {src:'@/plugins/element-ui'},
     {src:'@/plugins/axios'},
-    {src:'@/assets/iconfont/iconfont.js',ssr:false},
+    // {src:'@/assets/iconfont/iconfont.js',ssr:false},
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -52,6 +53,22 @@ export default {
         test:/\.less$/,
         loaders:'style-loader!css-loader!less-loader'
     }, 
+    {
+      test: /\.(png|jpe?g|gif|svg)$/,
+      loader: 'url-loader',
+      query: {
+        limit: 1000,
+        name: 'img/[name].[hash:7].[ext]'
+      }
+    },
+    {
+      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      loader: 'url-loader',
+      query: {
+        limit: 1000,
+        name: 'fonts/[name].[hash:7].[ext]'
+      }
+    }
  ],
  modules: [
   '@nuxtjs/axios','@nuxtjs/proxy',
@@ -87,7 +104,7 @@ export default {
     */
     extend(config, ctx) {
     },
-    vendor: ['axios','swiper','element-ui'] //为防止重复打包
+    vendor: ['axios','element-ui','prismjs','wowjs'] //为防止重复打包
   },
   render:{
     resourceHints: false,

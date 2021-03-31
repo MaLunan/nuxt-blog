@@ -59,8 +59,8 @@
     <div class="divPrevious">
         <h3 class="widget_title">友情链接</h3>
         <ul class="comment_ul">
-            <li class="finds">
-                <a href='http://9977.link'> 惊鸿</a>
+            <li class="friend" v-for="(item,index) in wpFriend" :key="index">
+                <a :href='item.friend_link'> {{item.friend_name}}</a>
             </li>
         </ul>
     </div>
@@ -74,11 +74,13 @@ export default {
         return {
             wpUser:{},
             wpComments:[],
+			wpFriend:[],
         }
     },
     created(){
         this.getposts()
         this.getComments()
+		this.getFriends()
     },
     methods:{
         //外部链接跳转
@@ -95,6 +97,12 @@ export default {
              this.$axios.post('/blog/wpPosts/getAllComments').then(res=>{
                  console.log(res.data.data)
                 this.wpComments=res.data.data.data
+            })
+        },
+        getFriends(){
+             this.$axios.get('/blog/wpPosts/getFriend').then(res=>{
+                 console.log(res.data.data)
+                this.wpFriend=res.data.data.datas
             })
         }
     }
@@ -238,7 +246,7 @@ export default {
 		}	
 	}
 }
-.finds{
+.friend{
 	padding: 12px;
 	font-size: 16px;
 	float:left;
