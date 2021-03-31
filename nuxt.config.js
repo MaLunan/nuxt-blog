@@ -5,7 +5,11 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no'},
-      { hid: 'description', name: 'description', content: '马鲁南个人博客，是一个记录博主学习和成长的自媒体博客。关注于web前端技术和web全栈技术的学习研究' }
+      { name: 'baidu-site-verification', content: 'bdukCluk30'},
+      { name: 'sogou_site_verification', content: 'gReIJbnqBO'},
+      { name: 'author', content: 'malunan'},
+      { name: 'keywords', content: '个人博客,技术博客,前端博客,个人网站,个人博客模板,个人原创网站'},
+      { hid: 'description', name: 'description', content: '马鲁南个人博客，是一个记录博主学习和成长的自媒体博客。关注于web前端技术和web全栈技术的学习研究' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
