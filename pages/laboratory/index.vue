@@ -58,6 +58,11 @@ export default {
                             description:'根据链接生成对应二维码',
                             link:'/laboratory/qrcode'
                         },
+                        {
+                            name:'文字头像生成',
+                            description:'根据不同的文字，生成带有背景色的文字头像',
+                            link:'/laboratory/textimg'
+                        },
                     ]
                 },
             ]

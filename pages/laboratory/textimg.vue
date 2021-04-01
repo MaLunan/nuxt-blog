@@ -7,16 +7,17 @@
 			<el-breadcrumb separator-class="el-icon-sugar">
 			<el-breadcrumb-item :to="{ path: '/' }"><i class="iconfont icon-home"></i>首页</el-breadcrumb-item>
 			<el-breadcrumb-item :to="{ path: '/laboratory' }">MaLunan实验室</el-breadcrumb-item>
-			<el-breadcrumb-item>二维码生成器</el-breadcrumb-item>
+			<el-breadcrumb-item>文字头像生成</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 		<div class="w1200">
             <div class="cardcss">
-                <Qrcodecom></Qrcodecom>
+                <Textimgcom :name='name'></Textimgcom>
+               输入：<el-input style="margin-top:24px;width:150px" :maxlength='1' v-model="name" placeholder="输入一个字"></el-input>
 			</div>
             <Exceptional/>
             <div class="tools">
-                <Comment ID='qrcode' title="二维码生成器"></Comment>	
+                <Comment ID='textimg' title="文字头像生成"></Comment>	
             </div>
 		</div>
 	</div>
@@ -28,9 +29,9 @@
 export default {
 	data() {
 		return {
-			active:'二维码生成器',
+			active:'文字头像生成',
 			actives:'',
-           
+            name:'马',
 		}
 	},
 	methods: {
@@ -38,16 +39,15 @@ export default {
 	},
 	head() {
 		return {
-			title:'二维码生成器-马鲁南的IT技术博客',
+			title:'文字头像生成-马鲁南的IT技术博客',
 			meta:[
-				{hid:'description',name:'description',content:'二维码生成器-马鲁南的IT技术博客,免费软件下载,技术分享,安装教程'},
+				{hid:'description',name:'description',content:'文字头像生成-马鲁南的IT技术博客,免费软件下载,技术分享,安装教程'},
 				{hid:'keywords',name:'keywords',content:'马鲁南,互联网,自媒体,马鲁南博客,新鲜科技,科技博客,独立博客,个人博客,原创博客,前端,前端开发,全栈,全栈开发,nuxt,nuxtjs,vue,vuejs,node.js'},
 				{hid:'author',content:'malunan'}
 			]
 		}
   },
   mounted() {
-
   }
 }
 </script>
@@ -69,6 +69,7 @@ export default {
 	overflow: hidden;
 	position: relative;
 	background-color: @background;
+    text-align: center;
 }
 </style>
 <style lang="less" scoped>
