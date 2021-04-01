@@ -52,7 +52,12 @@ export default {
                             name:'留言板',
                             description:'邮箱留言,留言审核,可变字体头像,emoji表情',
                             link:'/comments'
-                        }
+                        },
+                        {
+                            name:'二维码',
+                            description:'根据链接生成对应二维码',
+                            link:'/laboratory/qrcode'
+                        },
                     ]
                 },
             ]
