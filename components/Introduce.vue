@@ -51,7 +51,7 @@
         <h3 class="widget_title">最新留言</h3>
         <ul class="comment_ul">
             <li class="comment_li textone" v-for="(item,index) in wpComments" :key='index'>
-                <nuxt-link :to="'/article/'+item.comment_post_ID"><span class="comment_name">{{item.comment_author}} : </span><span>{{item.comment_content}}</span></nuxt-link>
+               <span class="comment_name">{{item.comment_author}} : </span><span>{{item.comment_content}}</span>
             </li>
         </ul>
     </div>
