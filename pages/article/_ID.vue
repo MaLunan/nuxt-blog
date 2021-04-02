@@ -46,12 +46,10 @@
 				</div>
 				<Exceptional/>
 				<Comment :ID='WpPostsData[0].ID' :title="WpPostsData[0].post_title"></Comment>
-			</div>		
+			</div>	
+			<Introduce></Introduce>	
 		</div>
-		<Introduce></Introduce>
 	</div>
-	 
-</div>
 </template>
 
 <script>
