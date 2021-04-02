@@ -15,12 +15,18 @@
 					<h1 class="tools_title">{{item.title}}</h1>
 					<ul class="tools_ul clearfix wow fadeIn" data-wow-duration='2s'>
 						<li class="tools_li"  v-for="(tem,ind) in item.moduleList" :key='ind'>
-							<nuxt-link :to="tem.link">
+							<nuxt-link :to="tem.link" v-if="tem.type==='nuxt'">
 								<h3 class="textone">{{tem.name}}</h3>
 								<div class="textTow text_style">
 									{{tem.description}}
 								</div>
 							</nuxt-link>
+							<a :href="tem.link" target="_blank"  v-else>
+								<h3 class="textone">{{tem.name}}</h3>
+								<div class="textTow text_style">
+									{{tem.description}}
+								</div>
+							</a>
 						</li>
 					</ul>
 				</div>
@@ -51,17 +57,84 @@ export default {
                         {
                             name:'留言板',
                             description:'邮箱留言,留言审核,可变字体头像,emoji表情',
-                            link:'/comments'
+                            link:'/comments',
+							type:'nuxt'
                         },
                         {
                             name:'二维码',
                             description:'根据链接生成对应二维码',
-                            link:'/laboratory/qrcode'
+                            link:'/laboratory/qrcode',
+							type:'nuxt'
                         },
                         {
                             name:'文字头像生成',
                             description:'根据不同的文字，生成带有背景色的文字头像',
-                            link:'/laboratory/textimg'
+                            link:'/laboratory/textimg',
+							type:'nuxt'
+                        },
+                    ]
+                },
+				{
+                    title:'开源项目',
+                    moduleList:[
+                        {
+                            name:'vuepress博客',
+                            description:'配置简单，只需要专注于md文档的编写即可',
+                            link:'http://vuepress.zmln1021.cn/',
+							type:'a'
+                        },
+                        {
+                            name:'自动生成侧边栏',
+                            description:'vuepress自动生成侧边栏,无需再配置,畅想写作',
+                            link:'https://www.npmjs.com/package/vuepress-sidebar-atuo',
+							type:'a'
+                        },
+                    ]
+                },
+				{
+                    title:'收藏的网站',
+                    moduleList:[
+                        {
+                            name:'炫酷特效',
+                            description:'电影级别爆炸效果',
+                            link:'https://paveldogreat.github.io/WebGL-Fluid-Simulation/',
+							type:'a'
+                        },
+                        {
+                            name:'一键抠图',
+                            description:'一键换背景,一键抠图,省时省力',
+                            link:'https://aipix.net/?lang=zh#cutout',
+							type:'a'
+                        },
+                        {
+                            name:'小霸王小游戏',
+                            description:'回忆童年',
+                            link:'http://lab.mkblog.cn/FCGames/#/',
+							type:'a'
+                        },
+                        {
+                            name:'人类反应测试',
+                            description:'测试一下你的反应能力',
+                            link:'https://humanbenchmark.com/',
+							type:'a'
+                        },
+                        {
+                            name:'帮你百度一下',
+                            description:'告诉伸手党请自己百度',
+                            link:'https://lmbtfy.tk/',
+							type:'a'
+                        },
+                        {
+                            name:'钢笔工具练习',
+                            description:'ps不会钢笔工具?点击这里',
+                            link:'https://bezier.method.ac/',
+							type:'a'
+                        },
+						{
+                            name:'渐变色',
+                            description:'还在为颜色色值发愁么?',
+                            link:'http://color.oulu.me/',
+							type:'a'
                         },
                     ]
                 },
