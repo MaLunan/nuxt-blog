@@ -3,15 +3,6 @@ export default {
   env: {
     MODE: process.env.MODE
   },
-  apps: [
-    {
-      name: 'NuxtAppName',
-      exec_mode: 'cluster',
-      instances: 'max', // Or a number of instances
-      script: './node_modules/nuxt/bin/nuxt.js',
-      args: 'start'
-    }
-  ],
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: '马鲁南的个人It技术博客',
