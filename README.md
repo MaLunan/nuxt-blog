@@ -18,3 +18,6 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+
+页面地址 http://zmln1021.cn/ 后接口代码 https://github.com/MaLunan/nuxt-blog-api
